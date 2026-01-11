@@ -8,7 +8,7 @@ ECサイト構築を例に、Template repositoryからプロジェクトを作�
 
 1. [はじめに](#1-はじめに)
 2. [プロジェクトの作成](#2-プロジェクトの作成)
-3. [CLAUDE.mdの設定](#3-claudemdの設定)
+3. [プロジェクトの設定](#3-プロジェクトの設定)
 4. [Phase 1: 要求分析](#4-phase-1-要求分析)
 5. [Phase 2: 仕様策定](#5-phase-2-仕様策定)
 6. [Phase 3: 技術選定](#6-phase-3-技術選定)
@@ -26,7 +26,7 @@ ECサイト構築を例に、Template repositoryからプロジェクトを作�
 ### 1.1 このチュートリアルで学ぶこと
 
 - Template repositoryからプロジェクトを作成する方法
-- CLAUDE.mdをプロジェクトに合わせて設定する方法
+- CLAUDE.mdとREADME.mdをプロジェクトに合わせて設定する方法
 - サブエージェントを活用した開発フローの実践
 - 各フェーズでのエージェントの使い分け
 
@@ -104,39 +104,53 @@ ec-shop/
 │   └── specs/               # 仕様書を配置
 ├── src/                     # ソースコード
 ├── tests/                   # テスト
-├── CLAUDE.md                # ← これを編集
+├── CLAUDE.md.template       # Claude Code設定テンプレート
+├── README.md.template       # プロジェクトREADMEテンプレート
 └── README.md
 ```
 
 ---
 
-## 3. CLAUDE.mdの設定
+## 3. プロジェクトの設定
 
-### 3.1 プロジェクト情報の編集
+### 3.1 テンプレートのコピー
 
-`CLAUDE.md`を開き、ECサイト用に編集します。
+テンプレートファイルをコピーして編集します。
 
-**編集前**:
-```markdown
-# プロジェクト: [プロジェクト名]
+```bash
+# Claude Code 設定ファイルをコピー
+cp CLAUDE.md.template CLAUDE.md
 
-## 概要
-
-[プロジェクトの簡潔な説明（1-2文）]
+# プロジェクト README をコピー
+cp README.md.template README.md
 ```
 
-**編集後**:
+### 3.2 CLAUDE.md の編集
+
+`CLAUDE.md` は Claude Code の動作設定ファイルです。言語設定やコーディング規約を確認・調整します。
+
 ```markdown
-# プロジェクト: EC Shop
+## 言語設定
+
+- 応答言語: 日本語
+- コード内コメント: 日本語
+- コミットメッセージ: 日本語
+- ドキュメント: 日本語
+```
+
+このチュートリアルでは、デフォルトの日本語設定のまま使用します。
+
+### 3.3 README.md の編集
+
+`README.md` にプロジェクト固有の情報を記載します。
+
+```markdown
+# EC Shop
 
 ## 概要
 
 シンプルなECサイト。商品の閲覧、カート管理、注文機能を提供する。
-```
 
-### 3.2 技術スタックの設定
-
-```markdown
 ## 技術スタック
 
 | カテゴリ | 技術 |
@@ -146,11 +160,35 @@ ec-shop/
 | データベース | PostgreSQL + Prisma |
 | インフラ | Docker (開発環境) |
 | テスト | Jest + React Testing Library |
+
+## セットアップ
+
+### 前提条件
+
+- Node.js 20.x 以上
+- Docker
+
+### インストール
+
+```bash
+npm install
+cp .env.example .env.local
 ```
 
-### 3.3 プロジェクト構造の設定
+## 開発
 
-```markdown
+```bash
+npm run dev              # 開発サーバー起動
+npm run build            # ビルド
+npm run lint             # リント
+npm test                 # テスト実行
+
+# データベース
+npm run db:migrate       # マイグレーション実行
+npm run db:seed          # シードデータ投入
+npm run db:studio        # Prisma Studio起動
+```
+
 ## プロジェクト構造
 
 ```
@@ -169,30 +207,7 @@ ec-shop/
 ```
 ```
 
-### 3.4 よく使うコマンドの設定
-
-```markdown
-## よく使うコマンド
-
-```bash
-# 開発
-npm run dev              # 開発サーバー起動
-npm run build            # ビルド
-npm run lint             # リント
-
-# テスト
-npm test                 # テスト実行
-npm run test:watch       # ウォッチモード
-npm run test:cov         # カバレッジ
-
-# データベース
-npm run db:migrate       # マイグレーション実行
-npm run db:seed          # シードデータ投入
-npm run db:studio        # Prisma Studio起動
-```
-```
-
-### 3.5 Claude Codeの起動
+### 3.4 Claude Codeの起動
 
 設定が完了したら、Claude Codeを起動します。
 
@@ -407,7 +422,7 @@ spec-planner として、docs/specs/requirements.md の要件定義書を読み�
 ```
 tech-leader として、docs/specs/ の仕様書を読み込み、
 このECサイトに最適な技術選定とアーキテクチャ方針を決定してください。
-CLAUDE.md に記載した技術スタックを前提としてください。
+README.md に記載した技術スタックを前提としてください。
 ```
 
 ### 6.2 tech-leaderの出力例
@@ -1145,6 +1160,27 @@ code-builder として、バグ分析レポートに基づいて修正を実装�
 | **仕様書を活用** | docs/specs/ に仕様を蓄積し、参照させる |
 | **レビューを忘れずに** | 実装後は必ず code-reviewer でチェック |
 
+### 12.1.1 スキルとサブエージェントの併用
+
+カスタムスキルとサブエージェントは併用することで、より効果的な開発が可能になります。
+
+**併用パターン:**
+
+サブエージェントが「**何をするか**」を決め、スキルが「**どのような基準で行うか**」を提供します。
+
+```
+[ユーザー] code-reviewer としてこのPRをレビューして
+
+→ code-reviewer サブエージェントが起動
+  → pr-reviewer スキルが自動適用（レビュー基準）
+  → security-baseline スキルが自動適用（セキュリティ観点）
+  → coding-standards スキルが自動適用（コーディング規約）
+```
+
+このように、サブエージェントは特定の役割として振る舞い、その役割に必要なスキルが自動的に適用されることで、一貫した品質の成果物を得ることができます。
+
+> カスタムスキルを使用するには、事前に `~/.claude/skills/` にインストールしておく必要があります。詳細は [Skills ガイド](./04-claude-skills-guide.md) を参照してください。
+
 ### 12.2 よく使うプロンプトパターン
 
 ```markdown
@@ -1170,7 +1206,7 @@ code-builder として、バグ分析レポートに基づいて修正を実装�
 |------|--------|
 | エージェントの出力が期待と違う | プロンプトをより具体的にする / 明示的にエージェントを指定 |
 | 処理に時間がかかる | タスクを分割する / 対象ファイルを限定する |
-| 既存コードと整合性がない | CLAUDE.md の規約を更新 / コード規約を明示 |
+| 既存コードと整合性がない | CLAUDE.md のコーディング規約を更新 / 規約を明示 |
 | 生成コードにエラー | code-reviewer でチェック / 段階的に実装 |
 
 ### 12.4 Serena MCP の活用

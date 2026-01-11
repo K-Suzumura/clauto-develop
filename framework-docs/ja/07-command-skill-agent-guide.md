@@ -203,7 +203,7 @@ Command   ┌──────────────────────�
 | `/git:commit` | - | - |
 | `/git:pr` | `pr-reviewer` | - |
 | `/git:branch` | - | - |
-| `/commit-push-pr` | `pr-reviewer` | - |
+| `/gh:commit-push-pr` | `pr-reviewer` | - |
 | `/fixup-from-pr-comments` | - | `code-builder` |
 | `/refactor:cleanup` | `coding-standards` | - |
 | `/session:compact-smart` | - | - |
@@ -218,7 +218,7 @@ Command   ┌──────────────────────�
 | `coding-standards` | `/impl:run`, `/refactor:cleanup` | `code-builder` |
 | `test-author` | `/qa:full` | - |
 | `debug-triage` | - | `code-debugger` |
-| `pr-reviewer` | `/git:pr`, `/commit-push-pr` | `code-reviewer` |
+| `pr-reviewer` | `/git:pr`, `/gh:commit-push-pr` | `code-reviewer` |
 | `security-baseline` | - | `code-reviewer` |
 | `dependency-change-reviewer` | - | `tech-leader` |
 | `release-notes-writer` | - | - |
@@ -297,7 +297,7 @@ Command   ┌──────────────────────�
 ├── git-branch.md         # ブランチ作成
 ├── git-commit.md         # コミット
 ├── git-pr.md             # PR作成
-├── commit-push-pr.md     # 統合ワークフロー
+├── gh:commit-push-pr.md  # 統合ワークフロー
 ├── fixup-from-pr-comments.md  # レビュー対応
 ├── refactor-cleanup.md   # リファクタリング
 ├── session-compact-smart.md   # セッション整理

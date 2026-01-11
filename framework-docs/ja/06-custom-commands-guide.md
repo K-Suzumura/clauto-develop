@@ -259,7 +259,7 @@ rm ~/.claude/commands/*.md
 
 ## 7. 統合ワークフロー
 
-### 7.1 /commit-push-pr - 統合版
+### 7.1 /gh:commit-push-pr - 統合版
 
 | 項目 | 内容 |
 |------|------|
@@ -269,7 +269,7 @@ rm ~/.claude/commands/*.md
 
 **使用例:**
 ```
-/commit-push-pr
+/gh:commit-push-pr
 ```
 
 **実行フロー:**
@@ -380,7 +380,7 @@ rm ~/.claude/commands/*.md
 ├── git-branch.md
 ├── git-commit.md
 ├── git-pr.md
-├── commit-push-pr.md
+├── gh:commit-push-pr.md
 ├── fixup-from-pr-comments.md
 ├── refactor-cleanup.md
 ├── session-compact-smart.md
@@ -427,7 +427,7 @@ project/
 | `/git:branch` | Git | ブランチ作成 |
 | `/git:commit` | Git | 規約準拠コミット |
 | `/git:pr` | Git | PR作成 |
-| `/commit-push-pr` | Git | commit→push→PR統合 |
+| `/gh:commit-push-pr` | Git | commit→push→PR統合 |
 | `/fixup-from-pr-comments` | Git | レビュー対応 |
 | `/refactor:cleanup` | 保守 | コード整理 |
 | `/session:compact-smart` | 運用 | セッション整理 |

@@ -55,3 +55,6 @@ CLAUDE.md
 tmp/
 temp/
 *.tmp
+
+# プロジェクト紹介記事（非公開）
+introducing-project.md

@@ -681,16 +681,41 @@ User: "Check the security of this code"
 └─────────────────────────────────────────────────────────────┘
 ```
 
-### 8.3 Combination Example
+### 8.3 Combining Skills with Subagents
+
+Skills and subagents are designed for different purposes, and combining them enables more effective development.
+
+| Aspect | Skills | Subagents |
+|--------|--------|-----------|
+| **Invocation** | Auto (Claude judgment) | Auto/Manual |
+| **Context** | Within main conversation | Independent context |
+| **Purpose** | Apply knowledge/rules | Research/analysis tasks |
+
+**Combination Pattern:**
+
+Subagents determine "**what to do**" while Skills provide "**the criteria for how to do it**".
 
 ```
-User: "Review this PR"
+[User] Review this PR as code-reviewer
 
-1. Claude detects and applies "Code Review" Skill
-2. Conducts review according to Skill instructions
-3. Delegates to subagent (code-reviewer) if needed
-4. Posts results with slash command (/pr-comment) after review complete
+→ code-reviewer subagent launches
+  → pr-reviewer skill auto-applied (review criteria)
+  → security-baseline skill auto-applied (security perspective)
+  → coding-standards skill auto-applied (coding standards)
 ```
+
+**Another Example:**
+
+```
+[User] Implement authentication feature as code-builder
+
+→ code-builder subagent launches
+  → coding-standards skill auto-applied (coding standards)
+  → security-baseline skill auto-applied (authentication security)
+  → test-author skill auto-applied (test creation criteria)
+```
+
+This way, subagents act in specific roles (reviewer, builder, etc.), and the skills necessary for that role are automatically applied, resulting in consistent quality deliverables.
 
 ### 8.4 Boris Cherny's View
 

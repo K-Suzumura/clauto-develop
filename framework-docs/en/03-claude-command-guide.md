@@ -102,7 +102,59 @@ Built-in commands available during interactive mode.
 | `/mcp` | Access MCP (Model Context Protocol) features |
 | `/permissions` | Manage tool permissions |
 
-### 2.4 Usage Examples
+### 2.4 MCP (Model Context Protocol)
+
+MCP is a protocol for extending Claude Code's capabilities. It allows integration of external tools and services into Claude Code.
+
+#### Managing MCP Servers
+
+```bash
+# List MCP servers
+claude mcp list
+
+# Add MCP server to project
+claude mcp add <name> -- <command> [args...]
+
+# Add MCP server globally (available in all projects)
+claude mcp add --scope user <name> -- <command> [args...]
+
+# Remove MCP server
+claude mcp remove <name>
+```
+
+#### Configuration via .mcp.json
+
+You can configure MCP servers by placing `.mcp.json` in the project root:
+
+```json
+{
+  "mcpServers": {
+    "server-name": {
+      "type": "stdio",
+      "command": "command-to-run",
+      "args": ["arg1", "arg2"],
+      "env": {
+        "ENV_VAR": "value"
+      }
+    }
+  }
+}
+```
+
+#### Serena (Included in This Project)
+
+This project includes Serena MCP server configuration (`.mcp.json`). Serena is a semantic code operation tool using LSP.
+
+**Prerequisite**: uv package manager is required.
+
+```bash
+# Install uv (if not installed)
+curl -LsSf https://astral.sh/uv/install.sh | sh
+```
+
+Serena is automatically loaded when Claude Code starts. See [Serena Integration Guide](./08-serena-integration-guide.md) for details.
+
+### 2.5 Usage Examples
 
 ```
 # Reset long conversation to free memory

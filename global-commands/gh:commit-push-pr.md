@@ -1,4 +1,4 @@
-# /commit-push-pr - 統合ワークフロー
+# /gh:commit-push-pr - 統合ワークフロー
 
 コミット → プッシュ → PR作成を1コマンドで実行してください。
 
@@ -27,7 +27,7 @@
 ## 出力形式
 
 ```markdown
-# commit-push-pr 完了
+# gh:commit-push-pr 完了
 
 ## Step 1: コミット
 - **コミットハッシュ**: abc1234
@@ -60,7 +60,7 @@
 
 ### 例: プッシュ失敗時
 ```markdown
-# commit-push-pr 中断
+# gh:commit-push-pr 中断
 
 ## 完了したステップ
 - [x] コミット: abc1234

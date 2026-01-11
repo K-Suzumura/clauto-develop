@@ -33,26 +33,20 @@ Claude Code を最大限に活用し、AI と人間が協調して開発を進�
    cd [your-repo-name]
    ```
 
-3. **CLAUDE.md を作成・編集**
-
-   `CLAUDE.md.template` を `CLAUDE.md` にコピーして編集：
+3. **テンプレートをコピーして編集**
 
    ```bash
+   # Claude Code 設定ファイルをコピー
    cp CLAUDE.md.template CLAUDE.md
+
+   # プロジェクト README をコピー
+   cp README.md.template README.md
    ```
 
-   `[ ]` で囲まれた部分をプロジェクトに合わせて編集：
+   各ファイルを編集：
 
-   ```markdown
-   # プロジェクト: [プロジェクト名]  ← 編集
-
-   ## 概要
-   [プロジェクトの説明]              ← 編集
-
-   ## 技術スタック
-   | フロントエンド | [React]       ← 編集
-   ...
-   ```
+   - **CLAUDE.md**: Claude Code の動作設定（言語設定、コーディング規約など）
+   - **README.md**: プロジェクトの概要、技術スタック、セットアップ手順など
 
 4. **不要なファイルを削除（オプション）**
 
@@ -77,7 +71,18 @@ Claude Code を最大限に活用し、AI と人間が協調して開発を進�
 
    これで `/spec:init`, `/git:commit` などのコマンドと、`security-baseline`, `coding-standards` などのスキルが使用可能になります。
 
-6. **開発を開始**
+6. **Serena MCP の有効化（オプション）**
+
+   本プロジェクトには Serena MCP サーバーの設定（`.mcp.json`）が含まれています。Serena を使用するには uv が必要です：
+
+   ```bash
+   # uv のインストール（未インストールの場合）
+   curl -LsSf https://astral.sh/uv/install.sh | sh
+   ```
+
+   Claude Code 起動時に `.mcp.json` が自動的に読み込まれ、Serena が有効になります。詳細は `framework-docs/ja/08-serena-integration-guide.md` を参照してください。
+
+7. **開発を開始**
 
    ```bash
    claude
@@ -102,13 +107,13 @@ Claude Code を最大限に活用し、AI と人間が協調して開発を進�
    # サブエージェント定義をコピー
    cp -r clauto-develop/.claude/agents/ your-project/.claude/agents/
 
-   # CLAUDE.md.template をコピーして CLAUDE.md として編集
+   # CLAUDE.md をコピーして編集
    cp clauto-develop/CLAUDE.md.template your-project/CLAUDE.md
    ```
 
 2. **CLAUDE.md を編集**
 
-   プロジェクトに合わせて設定を調整（`[ ]` で囲まれた部分を編集）
+   プロジェクトに合わせて言語設定やコーディング規約を調整
 
 3. **開発を開始**
 
@@ -166,6 +171,7 @@ clauto-develop/
 ├── .gitignore               # Git除外設定
 ├── LICENSE                  # Apache License 2.0
 ├── CLAUDE.md.template       # Claude Code 設定テンプレート
+├── README.md.template       # プロジェクト README テンプレート
 └── README.md                # このファイル
 ```
 
@@ -231,7 +237,7 @@ code-reviewer（レビュー）
 | `/qa:full` | フルテスト実行 |
 | `/git:commit` | 規約準拠コミット |
 | `/git:pr` | PR作成 |
-| `/commit-push-pr` | commit→push→PR統合 |
+| `/gh:commit-push-pr` | commit→push→PR統合 |
 
 詳細は `framework-docs/ja/06-custom-commands-guide.md` を参照
 
