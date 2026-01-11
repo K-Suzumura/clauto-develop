@@ -1159,6 +1159,27 @@ As code-builder, please implement fixes based on the bug analysis report:
 | **Use specifications** | Accumulate specifications in docs/specs/ and reference them |
 | **Don't forget reviews** | Always check with code-reviewer after implementation |
 
+### 12.1.1 Combining Skills with Subagents
+
+Custom skills and subagents can work together for more effective development.
+
+**Combination Pattern:**
+
+Subagents determine "**what to do**" while skills provide "**the criteria for how to do it**".
+
+```
+[User] Review this PR as code-reviewer
+
+→ code-reviewer subagent launches
+  → pr-reviewer skill auto-applied (review criteria)
+  → security-baseline skill auto-applied (security perspective)
+  → coding-standards skill auto-applied (coding standards)
+```
+
+This way, subagents act in specific roles, and the skills necessary for that role are automatically applied, resulting in consistent quality deliverables.
+
+> To use custom skills, you need to install them in `~/.claude/skills/` beforehand. See [Skills Guide](./04-claude-skills-guide.md) for details.
+
 ### 12.2 Common Prompt Patterns
 
 ```markdown
