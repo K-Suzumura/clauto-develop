@@ -8,7 +8,7 @@ A practical tutorial for creating a project from a Template repository and devel
 
 1. [Introduction](#1-introduction)
 2. [Creating the Project](#2-creating-the-project)
-3. [Configuring CLAUDE.md](#3-configuring-claudemd)
+3. [Project Configuration](#3-project-configuration)
 4. [Phase 1: Requirements Analysis](#4-phase-1-requirements-analysis)
 5. [Phase 2: Specification Planning](#5-phase-2-specification-planning)
 6. [Phase 3: Technology Selection](#6-phase-3-technology-selection)
@@ -26,7 +26,7 @@ A practical tutorial for creating a project from a Template repository and devel
 ### 1.1 What You'll Learn in This Tutorial
 
 - How to create a project from a Template repository
-- How to configure CLAUDE.md for your project
+- How to configure CLAUDE.md and README.md for your project
 - Practical development flow using subagents
 - How to use different agents for each phase
 
@@ -104,39 +104,53 @@ ec-shop/
 │   └── specs/               # Place specifications here
 ├── src/                     # Source code
 ├── tests/                   # Tests
-├── CLAUDE.md                # ← Edit this
+├── CLAUDE.md.template       # Claude Code configuration template
+├── README.md.template       # Project README template
 └── README.md
 ```
 
 ---
 
-## 3. Configuring CLAUDE.md
+## 3. Project Configuration
 
-### 3.1 Edit Project Information
+### 3.1 Copy Templates
 
-Open `CLAUDE.md` and edit it for the EC site.
+Copy the template files and edit them.
 
-**Before editing**:
-```markdown
-# Project: [Project Name]
+```bash
+# Copy Claude Code configuration file
+cp CLAUDE.md.template CLAUDE.md
 
-## Overview
-
-[Brief description of the project (1-2 sentences)]
+# Copy project README
+cp README.md.template README.md
 ```
 
-**After editing**:
+### 3.2 Edit CLAUDE.md
+
+`CLAUDE.md` is the Claude Code configuration file. Review and adjust language settings and coding conventions.
+
 ```markdown
-# Project: EC Shop
+## Language Settings
+
+- Response language: Japanese
+- Code comments: Japanese
+- Commit messages: Japanese
+- Documentation: Japanese
+```
+
+For this tutorial, we'll use the default Japanese settings as-is.
+
+### 3.3 Edit README.md
+
+Enter project-specific information in `README.md`.
+
+```markdown
+# EC Shop
 
 ## Overview
 
 A simple EC site. Provides product browsing, cart management, and order functionality.
-```
 
-### 3.2 Configure Technology Stack
-
-```markdown
 ## Technology Stack
 
 | Category | Technology |
@@ -146,11 +160,35 @@ A simple EC site. Provides product browsing, cart management, and order function
 | Database | PostgreSQL + Prisma |
 | Infrastructure | Docker (development environment) |
 | Testing | Jest + React Testing Library |
+
+## Setup
+
+### Prerequisites
+
+- Node.js 20.x or higher
+- Docker
+
+### Installation
+
+```bash
+npm install
+cp .env.example .env.local
 ```
 
-### 3.3 Configure Project Structure
+## Development
 
-```markdown
+```bash
+npm run dev              # Start development server
+npm run build            # Build
+npm run lint             # Lint
+npm test                 # Run tests
+
+# Database
+npm run db:migrate       # Run migrations
+npm run db:seed          # Seed data
+npm run db:studio        # Start Prisma Studio
+```
+
 ## Project Structure
 
 ```
@@ -169,30 +207,7 @@ ec-shop/
 ```
 ```
 
-### 3.4 Configure Commonly Used Commands
-
-```markdown
-## Commonly Used Commands
-
-```bash
-# Development
-npm run dev              # Start development server
-npm run build            # Build
-npm run lint             # Lint
-
-# Testing
-npm test                 # Run tests
-npm run test:watch       # Watch mode
-npm run test:cov         # Coverage
-
-# Database
-npm run db:migrate       # Run migrations
-npm run db:seed          # Seed data
-npm run db:studio        # Start Prisma Studio
-```
-```
-
-### 3.5 Start Claude Code
+### 3.4 Start Claude Code
 
 Once configuration is complete, start Claude Code.
 
@@ -407,7 +422,7 @@ Please save this technical specification to docs/specs/technical-spec.md
 ```
 As tech-leader, please read the specifications in docs/specs/
 and determine the optimal technology selection and architecture policy for this EC site.
-Please base your decisions on the technology stack listed in CLAUDE.md.
+Please base your decisions on the technology stack listed in README.md.
 ```
 
 ### 6.2 Example Output from tech-leader
@@ -1169,7 +1184,7 @@ As code-builder, please implement fixes based on the bug analysis report:
 |---------|----------|
 | Agent output differs from expectation | Make prompt more specific / explicitly specify agent |
 | Processing takes time | Split tasks / limit target files |
-| Inconsistent with existing code | Update conventions in CLAUDE.md / explicitly state coding standards |
+| Inconsistent with existing code | Update coding conventions in CLAUDE.md / explicitly state standards |
 | Generated code has errors | Check with code-reviewer / implement incrementally |
 
 ### 12.4 Using Serena MCP
