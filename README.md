@@ -83,9 +83,9 @@ Claude Code を最大限に活用し、AI と人間が協調して開発を進�
 
    ```
    「ユーザー認証機能を実装したい」
-   → req-analyzer が要求を分析
-   → spec-planner が仕様を策定
-   → code-builder が実装
+   → req-analyzer を使って要求を分析
+   → spec-planner を使って仕様を策定
+   → code-builder を使って実装
    ```
 
 ---
