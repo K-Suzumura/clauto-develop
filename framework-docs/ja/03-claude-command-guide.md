@@ -102,7 +102,59 @@ Claude Code は以下の階層で設定を読み込みます：
 | `/mcp` | MCP（Model Context Protocol）機能にアクセス |
 | `/permissions` | ツール権限の管理 |
 
-### 2.4 使用例
+### 2.4 MCP（Model Context Protocol）
+
+MCP は Claude Code の機能を拡張するためのプロトコルです。外部ツールやサービスを Claude Code に統合できます。
+
+#### MCP サーバーの管理
+
+```bash
+# MCP サーバーの一覧表示
+claude mcp list
+
+# プロジェクトに MCP サーバーを追加
+claude mcp add <name> -- <command> [args...]
+
+# グローバルに MCP サーバーを追加（全プロジェクトで使用可能）
+claude mcp add --scope user <name> -- <command> [args...]
+
+# MCP サーバーを削除
+claude mcp remove <name>
+```
+
+#### .mcp.json による設定
+
+プロジェクトルートに `.mcp.json` を配置することで、MCP サーバーを設定できます：
+
+```json
+{
+  "mcpServers": {
+    "server-name": {
+      "type": "stdio",
+      "command": "command-to-run",
+      "args": ["arg1", "arg2"],
+      "env": {
+        "ENV_VAR": "value"
+      }
+    }
+  }
+}
+```
+
+#### Serena（本プロジェクトに同梱）
+
+本プロジェクトには Serena MCP サーバーの設定（`.mcp.json`）が含まれています。Serena は LSP を活用したセマンティックコード操作ツールです。
+
+**前提条件**: uv パッケージマネージャーが必要です。
+
+```bash
+# uv のインストール（未インストールの場合）
+curl -LsSf https://astral.sh/uv/install.sh | sh
+```
+
+Claude Code 起動時に自動的に Serena が読み込まれます。詳細は [Serena 統合ガイド](./08-serena-integration-guide.md) を参照してください。
+
+### 2.5 使用例
 
 ```
 # 長い会話をリセットしてメモリを解放

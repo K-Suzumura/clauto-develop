@@ -77,7 +77,18 @@ Claude Code を最大限に活用し、AI と人間が協調して開発を進�
 
    これで `/spec:init`, `/git:commit` などのコマンドと、`security-baseline`, `coding-standards` などのスキルが使用可能になります。
 
-6. **開発を開始**
+6. **Serena MCP の有効化（オプション）**
+
+   本プロジェクトには Serena MCP サーバーの設定（`.mcp.json`）が含まれています。Serena を使用するには uv が必要です：
+
+   ```bash
+   # uv のインストール（未インストールの場合）
+   curl -LsSf https://astral.sh/uv/install.sh | sh
+   ```
+
+   Claude Code 起動時に `.mcp.json` が自動的に読み込まれ、Serena が有効になります。詳細は `framework-docs/ja/08-serena-integration-guide.md` を参照してください。
+
+7. **開発を開始**
 
    ```bash
    claude
