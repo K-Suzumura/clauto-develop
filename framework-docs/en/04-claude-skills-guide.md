@@ -7,15 +7,16 @@ This guide explains knowledge encapsulation and workflow automation using Claude
 ## Table of Contents
 
 1. [What are Skills](#1-what-are-skills)
-2. [How Skills Work](#2-how-skills-work)
-3. [Skills Placement](#3-skills-placement)
-4. [SKILL.md Structure](#4-skillmd-structure)
-5. [Creating Skills](#5-creating-skills)
-6. [Practical Skills Examples](#6-practical-skills-examples)
-7. [clauto-develop Custom Skills](#7-clauto-develop-custom-skills)
-8. [Differences from Slash Commands and Subagents](#8-differences-from-slash-commands-and-subagents)
-9. [Best Practices](#9-best-practices)
-10. [Troubleshooting](#10-troubleshooting)
+2. [Installation](#2-installation)
+3. [How Skills Work](#3-how-skills-work)
+4. [Skills Placement](#4-skills-placement)
+5. [SKILL.md Structure](#5-skillmd-structure)
+6. [Creating Skills](#6-creating-skills)
+7. [Practical Skills Examples](#7-practical-skills-examples)
+8. [clauto-develop Custom Skills](#8-clauto-develop-custom-skills)
+9. [Differences from Slash Commands and Subagents](#9-differences-from-slash-commands-and-subagents)
+10. [Best Practices](#10-best-practices)
+11. [Troubleshooting](#11-troubleshooting)
 
 ---
 
@@ -43,9 +44,51 @@ Skills are modules that bundle know-how and procedures for specific tasks. They 
 
 ---
 
-## 2. How Skills Work
+## 2. Installation
 
-### 2.1 Progressive Disclosure
+### 2.1 Prerequisites
+
+- Claude Code is installed
+- clauto-develop repository is cloned
+
+### 2.2 Global Installation
+
+To use custom skills in all projects, run the following commands:
+
+```bash
+# Run from the clauto-develop repository root directory
+mkdir -p ~/.claude/skills
+cp -r global-skills/* ~/.claude/skills/
+```
+
+### 2.3 Verify Installation
+
+Verify that the following directory structure is created:
+
+```
+~/.claude/skills/
+├── spec-reviewer/
+├── architecture-reviewer/
+├── coding-standards/
+├── test-author/
+├── debug-triage/
+├── pr-reviewer/
+├── security-baseline/
+├── dependency-change-reviewer/
+└── release-notes-writer/
+```
+
+### 2.4 Uninstall
+
+```bash
+rm -rf ~/.claude/skills/*
+```
+
+---
+
+## 3. How Skills Work
+
+### 3.1 Progressive Disclosure
 
 Skills are designed with a 3-layer structure, loading information incrementally as needed.
 
@@ -85,9 +128,9 @@ Claude executes according to instructions
 
 ---
 
-## 3. Skills Placement
+## 4. Skills Placement
 
-### 3.1 Placement Directories
+### 4.1 Placement Directories
 
 | Location | Scope | Purpose |
 |----------|-------|---------|
@@ -95,7 +138,7 @@ Claude executes according to instructions
 | `~/.claude/skills/` | All projects | Personal general-purpose Skills |
 | Plugin provided | Via plugin | Third-party Skills |
 
-### 3.2 Directory Structure
+### 4.2 Directory Structure
 
 ```
 .claude/skills/
@@ -115,9 +158,9 @@ Claude executes according to instructions
 
 ---
 
-## 4. SKILL.md Structure
+## 5. SKILL.md Structure
 
-### 4.1 Basic Structure
+### 5.1 Basic Structure
 
 ```markdown
 ---
@@ -168,7 +211,7 @@ description: For code review
 
 ---
 
-## 5. Creating Skills
+## 6. Creating Skills
 
 ### 5.1 Minimal Configuration
 
@@ -242,7 +285,7 @@ When using templates:
 
 ---
 
-## 6. Practical Skills Examples
+## 7. Practical Skills Examples
 
 ### 6.1 Code Review Skill
 
@@ -410,7 +453,7 @@ description: Apply internal brand guidelines to documents and presentations. Use
 
 ---
 
-## 7. clauto-develop Custom Skills
+## 8. clauto-develop Custom Skills
 
 12 custom Skills provided by this project. Place in `~/.claude/skills/` for use across all projects.
 
@@ -608,9 +651,9 @@ User: "Check the security of this code"
 
 ---
 
-## 8. Differences from Slash Commands and Subagents
+## 9. Differences from Slash Commands and Subagents
 
-### 8.1 Comparison Table
+### 9.1 Comparison Table
 
 | Item | Skills | Slash Commands | Subagents |
 |------|--------|----------------|-----------|
@@ -620,7 +663,7 @@ User: "Check the security of this code"
 | **Arguments** | None | Yes (`$ARGUMENTS`) | Task request text |
 | **Location** | `.claude/skills/` | `.claude/commands/` | `.claude/agents/` |
 
-### 8.2 Usage Guidelines
+### 9.2 Usage Guidelines
 
 ```
 ┌─────────────────────────────────────────────────────────────┐
@@ -660,9 +703,9 @@ Skills is still a new feature, and stability improvements in invocation logic ar
 
 ---
 
-## 9. Best Practices
+## 10. Best Practices
 
-### 9.1 Design Principles
+### 10.1 Design Principles
 
 1. **Focus narrowly**
    - 1 Skill = 1 purpose
@@ -720,9 +763,9 @@ git pull origin main
 
 ---
 
-## 10. Troubleshooting
+## 11. Troubleshooting
 
-### 10.1 Skill Not Loading
+### 11.1 Skill Not Loading
 
 ```bash
 # Start in debug mode
