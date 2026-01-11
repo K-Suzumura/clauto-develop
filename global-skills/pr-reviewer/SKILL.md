@@ -3,7 +3,7 @@ name: PRレビュー
 description: PRレビュー観点を固定。仕様逸脱・テスト漏れ・安全性を確認。PR作成後、レビュー依頼時に使用。
 related_commands:
   - /git:pr
-  - /commit-push-pr
+  - /gh:commit-push-pr
 related_agents:
   - code-reviewer
 ---
@@ -12,7 +12,7 @@ related_agents:
 
 Pull Request を体系的にレビューし、品質を確保します。
 
-> **関連コマンド**: `/git:pr` `/commit-push-pr` がこのSkillの観点でPR本文を生成します。
+> **関連コマンド**: `/git:pr` `/gh:commit-push-pr` がこのSkillの観点でPR本文を生成します。
 > **関連エージェント**: `code-reviewer` がこのSkillの基準でレビューを実施します。
 
 ## レビューチェックリスト

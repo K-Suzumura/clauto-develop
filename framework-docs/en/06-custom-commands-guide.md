@@ -259,7 +259,7 @@ rm ~/.claude/commands/*.md
 
 ## 7. Integrated Workflows
 
-### 7.1 /commit-push-pr - Integrated Version
+### 7.1 /gh:commit-push-pr - Integrated Version
 
 | Item | Content |
 |------|---------|
@@ -269,7 +269,7 @@ rm ~/.claude/commands/*.md
 
 **Usage:**
 ```
-/commit-push-pr
+/gh:commit-push-pr
 ```
 
 **Execution Flow:**
@@ -380,7 +380,7 @@ Commands used across all projects are placed in `~/.claude/commands/`.
 ├── git-branch.md
 ├── git-commit.md
 ├── git-pr.md
-├── commit-push-pr.md
+├── gh:commit-push-pr.md
 ├── fixup-from-pr-comments.md
 ├── refactor-cleanup.md
 ├── session-compact-smart.md
@@ -427,7 +427,7 @@ Detailed instructions for the command here.
 | `/git:branch` | Git | Create branch |
 | `/git:commit` | Git | Standard-compliant commit |
 | `/git:pr` | Git | Create PR |
-| `/commit-push-pr` | Git | Integrated commit→push→PR |
+| `/gh:commit-push-pr` | Git | Integrated commit→push→PR |
 | `/fixup-from-pr-comments` | Git | Review response |
 | `/refactor:cleanup` | Maintenance | Code cleanup |
 | `/session:compact-smart` | Operations | Session organization |

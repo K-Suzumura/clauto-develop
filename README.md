@@ -237,7 +237,7 @@ code-reviewer（レビュー）
 | `/qa:full` | フルテスト実行 |
 | `/git:commit` | 規約準拠コミット |
 | `/git:pr` | PR作成 |
-| `/commit-push-pr` | commit→push→PR統合 |
+| `/gh:commit-push-pr` | commit→push→PR統合 |
 
 詳細は `framework-docs/ja/06-custom-commands-guide.md` を参照
 
