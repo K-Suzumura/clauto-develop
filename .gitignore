@@ -1,0 +1,57 @@
+# 環境変数・機密情報
+.env
+.env.local
+.env.*.local
+*.pem
+*.key
+credentials*
+secrets*
+
+# 依存関係
+node_modules/
+vendor/
+.venv/
+venv/
+__pycache__/
+*.pyc
+
+# ビルド成果物
+dist/
+build/
+out/
+.next/
+target/
+
+# IDE・エディタ
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# テスト・カバレッジ
+coverage/
+.nyc_output/
+*.lcov
+
+# ログ
+*.log
+logs/
+
+# キャッシュ
+.cache/
+.parcel-cache/
+.turbo/
+
+# Claude Code ローカル設定（共有不要）
+.claude/settings.local.json
+CLAUDE.md
+
+# 一時ファイル
+tmp/
+temp/
+*.tmp
