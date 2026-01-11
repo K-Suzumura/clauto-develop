@@ -61,17 +61,17 @@ Claude Code を最大限に活用し、AI と人間が協調して開発を進�
    rm -rf framework-docs/
    ```
 
-5. **グローバル設定のインストール（オプション）**
+5. **カスタムコマンドのインストール（オプション）**
 
-   カスタムコマンドとスキルを使用する場合：
+   スラッシュコマンドを使用する場合：
 
    ```bash
-   # カスタムコマンド（~/.claude/commands/）
-   # → 別途提供されるスクリプトでインストール
-
-   # カスタムスキル（~/.claude/skills/）
-   # → 別途提供されるスクリプトでインストール
+   # カスタムコマンドをグローバルにインストール
+   mkdir -p ~/.claude/commands
+   cp global-commands/*.md ~/.claude/commands/
    ```
+
+   これで `/spec:init`, `/git:commit` などのコマンドが使用可能になります。
 
 6. **開発を開始**
 
@@ -156,6 +156,7 @@ clauto-develop/
 ├── .github/                 # GitHub テンプレート
 │   ├── ISSUE_TEMPLATE/      # Issue テンプレート
 │   └── PULL_REQUEST_TEMPLATE.md
+├── global-commands/         # カスタムコマンド（13種類）
 ├── .mcp.json                # Serena MCP設定
 ├── .gitignore               # Git除外設定
 ├── LICENSE                  # Apache License 2.0

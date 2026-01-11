@@ -7,13 +7,14 @@ A list and usage guide for custom commands (slash commands) used in the clauto-d
 ## Table of Contents
 
 1. [Overview](#1-overview)
-2. [Specification Phase](#2-specification-phase)
-3. [Planning & Implementation Phase](#3-planning--implementation-phase)
-4. [Quality Assurance Phase](#4-quality-assurance-phase)
-5. [Git Operations](#5-git-operations)
-6. [Integrated Workflows](#6-integrated-workflows)
-7. [Maintenance & Operations](#7-maintenance--operations)
-8. [Command Placement](#8-command-placement)
+2. [Installation](#2-installation)
+3. [Specification Phase](#3-specification-phase)
+4. [Planning & Implementation Phase](#4-planning--implementation-phase)
+5. [Quality Assurance Phase](#5-quality-assurance-phase)
+6. [Git Operations](#6-git-operations)
+7. [Integrated Workflows](#7-integrated-workflows)
+8. [Maintenance & Operations](#8-maintenance--operations)
+9. [Command Placement](#9-command-placement)
 
 ---
 
@@ -43,9 +44,45 @@ Spec Creation → Plan Creation → Implementation → Testing → Commit → PR
 
 ---
 
-## 2. Specification Phase
+## 2. Installation
 
-### 2.1 /spec:init - Specification Template Generation
+### 2.1 Prerequisites
+
+- Claude Code is installed
+- clauto-develop repository is cloned
+
+### 2.2 Global Installation
+
+To use custom commands in all projects, run the following commands:
+
+```bash
+# Run from the clauto-develop repository root directory
+mkdir -p ~/.claude/commands
+cp global-commands/*.md ~/.claude/commands/
+```
+
+### 2.3 Verify Installation
+
+Start Claude Code and verify that the following commands are recognized:
+
+```
+/spec:init
+/git:commit
+```
+
+You can see the command list with `/help`.
+
+### 2.4 Uninstall
+
+```bash
+rm ~/.claude/commands/*.md
+```
+
+---
+
+## 3. Specification Phase
+
+### 3.1 /spec:init - Specification Template Generation
 
 | Item | Content |
 |------|---------|
@@ -66,7 +103,7 @@ Spec Creation → Plan Creation → Implementation → Testing → Commit → PR
 - Data Design
 - Constraints & Prerequisites
 
-### 2.2 /spec:review - Specification Review
+### 3.2 /spec:review - Specification Review
 
 | Item | Content |
 |------|---------|
@@ -88,9 +125,9 @@ Spec Creation → Plan Creation → Implementation → Testing → Commit → PR
 
 ---
 
-## 3. Planning & Implementation Phase
+## 4. Planning & Implementation Phase
 
-### 3.1 /plan:make - Implementation Plan Creation
+### 4.1 /plan:make - Implementation Plan Creation
 
 | Item | Content |
 |------|---------|
@@ -109,7 +146,7 @@ Spec Creation → Plan Creation → Implementation → Testing → Commit → PR
 - Task details (Overview, Deliverables, Completion criteria)
 - Dependency diagram
 
-### 3.2 /impl:run - Task Implementation Execution
+### 4.2 /impl:run - Task Implementation Execution
 
 | Item | Content |
 |------|---------|
@@ -131,9 +168,9 @@ Spec Creation → Plan Creation → Implementation → Testing → Commit → PR
 
 ---
 
-## 4. Quality Assurance Phase
+## 5. Quality Assurance Phase
 
-### 4.1 /qa:full - Full Test Execution
+### 5.1 /qa:full - Full Test Execution
 
 | Item | Content |
 |------|---------|
@@ -154,9 +191,9 @@ Spec Creation → Plan Creation → Implementation → Testing → Commit → PR
 
 ---
 
-## 5. Git Operations
+## 6. Git Operations
 
-### 5.1 /git:branch - Branch Creation
+### 6.1 /git:branch - Branch Creation
 
 | Item | Content |
 |------|---------|
@@ -175,7 +212,7 @@ Spec Creation → Plan Creation → Implementation → Testing → Commit → PR
 - `fix/{issue-id}-{short-description}`
 - `refactor/{description}`
 
-### 5.2 /git:commit - Standard-compliant Commit
+### 6.2 /git:commit - Standard-compliant Commit
 
 | Item | Content |
 |------|---------|
@@ -197,7 +234,7 @@ Spec Creation → Plan Creation → Implementation → Testing → Commit → PR
 <footer>
 ```
 
-### 5.3 /git:pr - Pull Request Creation
+### 6.3 /git:pr - Pull Request Creation
 
 | Item | Content |
 |------|---------|
@@ -220,9 +257,9 @@ Spec Creation → Plan Creation → Implementation → Testing → Commit → PR
 
 ---
 
-## 6. Integrated Workflows
+## 7. Integrated Workflows
 
-### 6.1 /commit-push-pr - Integrated Version
+### 7.1 /commit-push-pr - Integrated Version
 
 | Item | Content |
 |------|---------|
@@ -240,7 +277,7 @@ Spec Creation → Plan Creation → Implementation → Testing → Commit → PR
 2. Push to remote
 3. Create PR
 
-### 6.2 /fixup-from-pr-comments - Review Response
+### 7.2 /fixup-from-pr-comments - Review Response
 
 | Item | Content |
 |------|---------|
@@ -263,9 +300,9 @@ Spec Creation → Plan Creation → Implementation → Testing → Commit → PR
 
 ---
 
-## 7. Maintenance & Operations
+## 8. Maintenance & Operations
 
-### 7.1 /refactor:cleanup - Code Cleanup
+### 8.1 /refactor:cleanup - Code Cleanup
 
 | Item | Content |
 |------|---------|
@@ -285,7 +322,7 @@ Spec Creation → Plan Creation → Implementation → Testing → Commit → PR
 - Split long functions
 - Convert magic numbers to constants
 
-### 7.2 /session:compact-smart - Smart Compact
+### 8.2 /session:compact-smart - Smart Compact
 
 | Item | Content |
 |------|---------|
@@ -304,7 +341,7 @@ Spec Creation → Plan Creation → Implementation → Testing → Commit → PR
 - TODOs/Next actions
 - Notes
 
-### 7.3 /ultrathink - Deep Thinking Mode
+### 8.3 /ultrathink - Deep Thinking Mode
 
 | Item | Content |
 |------|---------|
@@ -327,9 +364,9 @@ Spec Creation → Plan Creation → Implementation → Testing → Commit → PR
 
 ---
 
-## 8. Command Placement
+## 9. Command Placement
 
-### 8.1 Global Commands
+### 9.1 Global Commands
 
 Commands used across all projects are placed in `~/.claude/commands/`.
 
@@ -350,7 +387,7 @@ Commands used across all projects are placed in `~/.claude/commands/`.
 └── ultrathink.md
 ```
 
-### 8.2 Project-Specific Commands
+### 9.2 Project-Specific Commands
 
 Commands used only in specific projects are placed in `.claude/commands/`.
 
@@ -361,7 +398,7 @@ project/
         └── project-specific-command.md
 ```
 
-### 8.3 Command File Format
+### 9.3 Command File Format
 
 ```markdown
 # /command-name - Command description
