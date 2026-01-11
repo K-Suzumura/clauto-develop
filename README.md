@@ -20,7 +20,7 @@ Claude Code を最大限に活用し、AI と人間が協調して開発を進�
 
    GitHub で「Use this template」ボタンをクリック、または以下のリンクから作成：
 
-   👉 [Use this template](https://github.com/kotar/clauto-develop/generate)
+   👉 [Use this template](https://github.com/new?template_name=clauto-develop&template_owner=K-Suzumura)
 
    - 「Create a new repository」を選択
    - リポジトリ名を入力（例: `my-project`）
@@ -80,6 +80,7 @@ Claude Code を最大限に活用し、AI と人間が協調して開発を進�
    ```
 
    Claude Code 内で：
+
    ```
    「ユーザー認証機能を実装したい」
    → req-analyzer が要求を分析
