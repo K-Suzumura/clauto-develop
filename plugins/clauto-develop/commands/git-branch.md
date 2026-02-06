@@ -1,3 +1,9 @@
+---
+name: git-branch
+description: Create branch based on specification
+disable-model-invocation: true
+---
+
 # /git:branch - ブランチ作成
 
 仕様に基づいたブランチを作成してください。

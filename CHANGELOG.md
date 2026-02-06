@@ -5,6 +5,31 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [v0.3.0] - 2026-02-06
+
+### Added
+
+- **YAML Frontmatter**: 全スキル、コマンド、エージェントに YAML frontmatter を追加
+  - スキル: kebab-case の英語名、description
+  - コマンド: name, description, disable-model-invocation
+  - エージェント: name, description, tools, model
+- **MCP サーバー統合**: plugin.json に Serena MCP サーバー設定を追加
+- **ベストプラクティス参照**: README に公式ベストプラクティスへのリンクを追加
+- **推奨セットアップ**: `/init` コマンドの使用を推奨するセクションを追加
+
+### Changed
+
+- **CLAUDE.md.template 簡素化**: ベストプラクティスに従い大幅に簡素化
+  - 検証コマンドセクションを追加（最重要）
+  - コンパクト時の指示を追加
+  - 冗長なセクションを削除
+- **エージェント表の改善**: モデルとツールの情報を追加
+- バージョンを 1.1.0 に更新
+
+### Reference
+
+- [Best Practices for Claude Code](https://code.claude.com/docs/en/best-practices)
+
 ## [v0.2.0] - 2026-02-06
 
 ### Added

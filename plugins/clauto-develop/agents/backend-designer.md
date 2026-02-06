@@ -1,3 +1,10 @@
+---
+name: backend-designer
+description: Designs APIs, databases, and backend architecture
+tools: Read, Write, Glob, Grep
+model: sonnet
+---
+
 # backend-designer（バックエンド設計者）
 
 **役割グループ**: Designer

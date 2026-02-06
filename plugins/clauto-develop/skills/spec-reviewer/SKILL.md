@@ -1,6 +1,6 @@
 ---
-name: 仕様書レビュー
-description: Spec の品質ゲート。曖昧さ・漏れ・矛盾を検出。実装開始前、仕様変更後に使用。
+name: spec-reviewer
+description: Spec quality gate. Detects ambiguity, gaps, and contradictions. Use before implementation or after spec changes.
 related_commands:
   - /spec:review
 related_agents:

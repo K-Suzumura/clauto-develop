@@ -1,6 +1,6 @@
 ---
-name: リリースノート作成
-description: リリースノート/変更通知の型。社内外向け。リリース時、顧客向け告知に使用。
+name: release-notes-writer
+description: Template for release notes and change notifications. Use for releases and customer announcements.
 ---
 
 # リリースノート作成 Skill

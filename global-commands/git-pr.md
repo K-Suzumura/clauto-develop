@@ -1,3 +1,9 @@
+---
+name: git-pr
+description: Create standardized pull request
+disable-model-invocation: true
+---
+
 # /git:pr - プルリクエスト作成
 
 標準化されたプルリクエストを作成してください。

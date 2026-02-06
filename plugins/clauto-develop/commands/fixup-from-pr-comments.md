@@ -1,3 +1,9 @@
+---
+name: fixup-from-pr-comments
+description: Fix code based on PR review comments
+disable-model-invocation: true
+---
+
 # /fixup-from-pr-comments - PRコメント対応
 
 PRのレビューコメントに基づいて修正を行ってください。

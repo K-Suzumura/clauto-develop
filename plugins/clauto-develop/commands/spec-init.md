@@ -1,3 +1,9 @@
+---
+name: spec-init
+description: Generate specification template
+disable-model-invocation: true
+---
+
 # /spec:init - 仕様書テンプレート生成
 
 `docs/spec.md` に仕様書テンプレートを生成してください。

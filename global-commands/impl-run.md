@@ -1,3 +1,9 @@
+---
+name: impl-run
+description: Execute task implementation from plan
+disable-model-invocation: true
+---
+
 # /impl:run - タスク実装実行
 
 指定されたタスクの実装を開始してください。

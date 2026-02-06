@@ -3,78 +3,55 @@
 <!--
   Claude Code の設定ファイルです。
   プロジェクトに合わせて編集してください。
+
+  IMPORTANT: Keep this file concise. For each line, ask:
+  "Would removing this cause Claude to make mistakes?" If not, cut it.
 -->
+
+## 検証コマンド（最重要）
+
+<!-- TODO: プロジェクトに合わせて設定してください -->
+```bash
+# テスト実行
+npm test              # または pytest, go test, etc.
+
+# 型チェック
+npm run typecheck     # または mypy, tsc --noEmit, etc.
+
+# リント
+npm run lint          # または ruff, eslint, etc.
+```
 
 ## 言語設定
 
 - 応答言語: 日本語
-- コード内コメント: 日本語
 - コミットメッセージ: 日本語
-- ドキュメント: 日本語
 
-## コーディング規約
+## コード規約（デフォルトと異なる部分のみ）
 
-### 命名規則
+<!--
+  Claude はすでに言語の標準規約を知っています。
+  ここにはプロジェクト固有の規約のみ記載してください。
+-->
 
-| 対象 | 規則 | 例 |
-|------|------|-----|
-| 変数・関数 | camelCase | `getUserName` |
-| クラス/型 | PascalCase | `UserProfile` |
-| 定数 | UPPER_SNAKE_CASE | `MAX_RETRY_COUNT` |
-| ファイル名 | kebab-case | `user-service.ts` |
+- ES modules (import/export) を使用、CommonJS (require) は使用しない
+- 日本語コメント可
 
-> 言語・フレームワークの慣習に従って調整してください
+## Git 規約
 
-### コメント規約
+- コミットメッセージ形式: `<type>: <subject>`
+- type: feat, fix, docs, style, refactor, test, chore
+- ブランチ: feature/, fix/, refactor/
 
-- 関数・クラスにはドキュメントコメントを記載
-- 複雑なロジックにはインラインコメントを追加
-- TODO/FIXMEにはチケット番号を付与
+## コンパクト時の指示
 
-## Git規約
-
-### ブランチ命名
-
-- 機能: `feature/[機能名]`
-- バグ修正: `fix/[バグ名]`
-- リファクタ: `refactor/[対象]`
-
-### コミットメッセージ
-
-```
-<type>: <subject>
-
-[body]
-```
-
-**type**: feat, fix, docs, style, refactor, test, chore
-
-## 共通原則
-
-- 不明点は勝手に仮定せず、必ず確認する
-- 役割外の判断・実装をしない
-- 必要なファイルのみ読むこと
-- 日本語で応答する
-
-## サブエージェント
-
-以下のサブエージェントが利用可能です（詳細は `.claude/agents/` 参照）：
-
-| エージェント | 役割 | 用途 |
-|-------------|------|------|
-| `req-analyzer` | Planner | 要求分析、要件定義 |
-| `spec-planner` | Planner | 技術仕様書の作成 |
-| `tech-leader` | Designer | 技術選定、アーキテクチャ設計 |
-| `frontend-designer` | Designer | UI/UX設計、コンポーネント設計 |
-| `backend-designer` | Designer | API設計、DB設計 |
-| `code-builder` | Builder | コード実装、テスト作成 |
-| `code-reviewer` | Reviewer | コードレビュー、品質チェック |
-| `code-debugger` | Reviewer | バグ調査、修正 |
-| `code-guide` | Guide | コードベースの案内、説明 |
-| `general-purpose` | Guide | 汎用タスク対応 |
+When compacting, always preserve:
+- 変更したファイルの完全なリスト
+- 実行したテストコマンドと結果
+- 未完了のタスクと次のステップ
+- 重要なアーキテクチャ決定
 
 ## 禁止事項
 
-- 参照禁止ファイル（`.env*`, `credentials*`, `secrets*`）へのアクセス
-- 役割を超えた作業の実行
+- `.env*`, `credentials*`, `secrets*` へのアクセス
 - 確認なしの破壊的変更

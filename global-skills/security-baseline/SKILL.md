@@ -1,6 +1,6 @@
 ---
-name: セキュリティベースライン
-description: 最低限のセキュリティレビューを毎回抜けなく実施。外部I/O、認証認可、ファイル/ネットワーク、依存追加時に使用。
+name: security-baseline
+description: Minimum security review checklist. Use for external I/O, auth, file/network access, and dependency changes.
 related_agents:
   - code-reviewer
 ---

@@ -1,6 +1,6 @@
 ---
-name: デバッグトリアージ
-description: ログ/スタックトレース/再現手順から原因切り分けの型。原因不明バグ、CI失敗、パフォーマンス劣化時に使用。
+name: debug-triage
+description: Systematic debugging from logs, stack traces, and repro steps. Use for unknown bugs, CI failures, and performance issues.
 related_agents:
   - code-debugger
 ---

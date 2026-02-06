@@ -1,6 +1,6 @@
 ---
-name: アーキテクチャレビュー
-description: 責務分離・ディレクトリ/レイヤ設計のレビュー。大きめの機能追加、初期構築、リファクタ前に使用。
+name: architecture-reviewer
+description: Review separation of concerns and layer design. Use before major features, initial setup, or refactoring.
 ---
 
 # アーキテクチャレビュー Skill
