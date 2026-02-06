@@ -1,6 +1,6 @@
 ---
-name: コーディング規約
-description: チームの書き方の標準を実装・レビュー時に適用。命名、例外設計、ログ方針、コメント規約等を確認。
+name: coding-standards
+description: Apply team coding standards during implementation and review. Covers naming, exception design, logging, and comments.
 related_commands:
   - /impl:run
   - /refactor:cleanup

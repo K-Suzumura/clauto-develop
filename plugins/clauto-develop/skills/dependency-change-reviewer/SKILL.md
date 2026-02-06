@@ -1,6 +1,6 @@
 ---
-name: 依存パッケージ変更レビュー
-description: 依存追加・アップデート時の確認観点を固定。新ライブラリ導入、バージョン更新時に使用。
+name: dependency-change-reviewer
+description: Review checklist for dependency additions and updates. Use for new libraries and version upgrades.
 ---
 
 # 依存パッケージ変更レビュー Skill

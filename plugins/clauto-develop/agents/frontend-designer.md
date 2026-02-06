@@ -1,3 +1,10 @@
+---
+name: frontend-designer
+description: Designs UI/UX, components, and frontend architecture
+tools: Read, Write, Glob, Grep
+model: sonnet
+---
+
 # frontend-designer（フロントエンド設計者）
 
 **役割グループ**: Designer

@@ -1,7 +1,7 @@
 {
   "name": "clauto-develop",
   "description": "Claude Code を活用した AI 駆動開発フレームワーク",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "author": {
     "name": "K-Suzumura"
   },
@@ -11,10 +11,29 @@
     "subagents",
     "specification-driven",
     "code-review",
-    "git-workflow"
+    "git-workflow",
+    "japanese"
   ],
   "repository": "https://github.com/K-Suzumura/clauto-develop",
+  "homepage": "https://github.com/K-Suzumura/clauto-develop",
   "agents": "./agents",
   "commands": "./commands",
-  "skills": "./skills"
+  "skills": "./skills",
+  "mcpServers": {
+    "serena": {
+      "command": "uvx",
+      "args": [
+        "--from",
+        "git+https://github.com/oraios/serena",
+        "serena",
+        "start-mcp-server",
+        "--context",
+        "claude-code",
+        "--project-from-cwd"
+      ],
+      "env": {
+        "ENABLE_TOOL_SEARCH": "true"
+      }
+    }
+  }
 }

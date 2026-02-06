@@ -209,18 +209,18 @@ clauto-develop/
 
 ### エージェント一覧
 
-| エージェント | 役割グループ | 概要 |
-|-------------|-------------|------|
-| **req-analyzer** | Planner | 要求分析者。ユーザーの曖昧な要求を具体的な要件に変換 |
-| **spec-planner** | Planner | 仕様策定者。要件を実装可能な技術仕様に変換 |
-| **tech-leader** | Designer | テックリード。技術選定とアーキテクチャの方針決定 |
-| **backend-designer** | Designer | バックエンド設計者。API 設計、DB 設計を担当 |
-| **frontend-designer** | Designer | フロントエンド設計者。UI/UX 設計、コンポーネント設計 |
-| **code-builder** | Builder | コードビルダー。設計仕様に基づいた実装 |
-| **code-reviewer** | Reviewer | コードレビューワー。品質、セキュリティ、パフォーマンス評価 |
-| **code-debugger** | Reviewer | コードデバッガー。バグの特定と根本原因分析 |
-| **code-guide** | Guide | コードガイド。コードベースの案内と実装箇所の特定 |
-| **general-purpose** | Guide | 汎用エージェント。複雑なマルチステップタスクに対応 |
+| エージェント | 役割 | モデル | ツール |
+|-------------|------|--------|--------|
+| **req-analyzer** | 要求分析者 | haiku | Read, Glob, Grep, WebSearch |
+| **spec-planner** | 仕様策定者 | sonnet | Read, Write, Glob, Grep |
+| **tech-leader** | テックリード | opus | Read, Glob, Grep, WebSearch |
+| **backend-designer** | バックエンド設計者 | sonnet | Read, Write, Glob, Grep |
+| **frontend-designer** | フロントエンド設計者 | sonnet | Read, Write, Glob, Grep |
+| **code-builder** | コードビルダー | sonnet | Read, Write, Edit, Glob, Grep, Bash |
+| **code-reviewer** | コードレビューワー | opus | Read, Glob, Grep |
+| **code-debugger** | コードデバッガー | sonnet | Read, Glob, Grep, Bash |
+| **code-guide** | コードガイド | haiku | Read, Glob, Grep |
+| **general-purpose** | 汎用エージェント | sonnet | All |
 
 ### 開発フロー
 
@@ -346,7 +346,35 @@ claude mcp add serena -- uvx --from git+https://github.com/oraios/serena serena 
 
 ---
 
-## Boris Cherny 氏の 7 つのベストプラクティス
+## ベストプラクティス
+
+### 公式ベストプラクティス
+
+Claude Code の公式ベストプラクティスに準拠しています：
+
+👉 [Best Practices for Claude Code](https://code.claude.com/docs/en/best-practices)
+
+**特に重要なポイント:**
+
+1. **検証方法を提供する** - テスト、スクリーンショット、期待される出力を含める
+2. **探索 → 計画 → 実装** - Plan Mode で計画を立ててから実装
+3. **CLAUDE.md を簡潔に** - 各行について「これがないと Claude がミスするか？」を問う
+4. **コンテキストを積極的に管理** - `/clear` でタスク間のコンテキストをリセット
+5. **サブエージェントで調査** - 調査はサブエージェントに委譲し、メインコンテキストをクリーンに保つ
+
+### 推奨セットアップ
+
+プラグインインストール後、プロジェクトに合わせて設定を行います：
+
+```bash
+# CLAUDE.md の自動生成（推奨）
+/init
+
+# 生成された CLAUDE.md をプロジェクトに合わせてカスタマイズ
+# 特に検証コマンド（テスト、型チェック、リント）を設定
+```
+
+### Boris Cherny 氏の 7 つのベストプラクティス
 
 Claude Code 作成者が実践する、効率的な AI 開発のためのベストプラクティス：
 

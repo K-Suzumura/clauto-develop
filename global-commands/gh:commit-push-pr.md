@@ -1,3 +1,9 @@
+---
+name: gh-commit-push-pr
+description: Commit, push, and create PR in one command
+disable-model-invocation: true
+---
+
 # /gh:commit-push-pr - 統合ワークフロー
 
 コミット → プッシュ → PR作成を1コマンドで実行してください。

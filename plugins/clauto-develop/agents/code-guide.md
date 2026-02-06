@@ -1,3 +1,10 @@
+---
+name: code-guide
+description: Navigates codebase and helps understand implementation
+tools: Read, Glob, Grep
+model: haiku
+---
+
 # code-guide（コードガイド）
 
 **役割グループ**: Guide

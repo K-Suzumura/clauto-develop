@@ -1,6 +1,6 @@
 ---
-name: テスト作成
-description: Spec からテスト観点とテストコードを標準化して生成。新機能、バグ修正、回帰テスト追加時に使用。
+name: test-author
+description: Generate standardized test cases and code from specs. Use for new features, bug fixes, and regression tests.
 ---
 
 # テスト作成 Skill

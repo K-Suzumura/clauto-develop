@@ -1,3 +1,9 @@
+---
+name: spec-review
+description: Review specification quality and report issues
+disable-model-invocation: true
+---
+
 # /spec:review - 仕様書レビュー
 
 `docs/spec.md` の品質チェックを行い、問題点を報告してください。

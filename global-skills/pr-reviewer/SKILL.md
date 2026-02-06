@@ -1,6 +1,6 @@
 ---
-name: PRレビュー
-description: PRレビュー観点を固定。仕様逸脱・テスト漏れ・安全性を確認。PR作成後、レビュー依頼時に使用。
+name: pr-reviewer
+description: Fixed PR review criteria. Checks spec compliance, test coverage, and safety.
 related_commands:
   - /git:pr
   - /gh:commit-push-pr

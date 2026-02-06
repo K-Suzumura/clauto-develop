@@ -1,3 +1,9 @@
+---
+name: session-compact-smart
+description: Smart compaction to prevent long session issues
+disable-model-invocation: true
+---
+
 # /session:compact-smart - スマートコンパクト
 
 長時間セッションの事故を防ぐため、コンパクト化と状態の保存を行ってください。

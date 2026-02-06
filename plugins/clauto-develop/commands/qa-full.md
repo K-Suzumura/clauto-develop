@@ -1,3 +1,9 @@
+---
+name: qa-full
+description: Run full test suite with design and reporting
+disable-model-invocation: true
+---
+
 # /qa:full - フルテスト実行
 
 テスト設計から実行、結果整理までを一気に実行してください。

@@ -1,3 +1,10 @@
+---
+name: code-reviewer
+description: Reviews code quality, security, and performance
+tools: Read, Glob, Grep
+model: opus
+---
+
 # code-reviewer（コードレビューワー）
 
 **役割グループ**: Reviewer

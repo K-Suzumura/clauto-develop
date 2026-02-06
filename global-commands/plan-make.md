@@ -1,3 +1,9 @@
+---
+name: plan-make
+description: Create implementation plan from specification
+disable-model-invocation: true
+---
+
 # /plan:make - 実装計画作成
 
 仕様書（`docs/spec.md`）から実装タスク一覧を作成してください。

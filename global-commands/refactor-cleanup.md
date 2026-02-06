@@ -1,3 +1,9 @@
+---
+name: refactor-cleanup
+description: Clean up code without changing behavior
+disable-model-invocation: true
+---
+
 # /refactor:cleanup - コード整理
 
 振る舞いを変えずにコードを整理してください。

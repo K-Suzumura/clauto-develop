@@ -1,3 +1,10 @@
+---
+name: req-analyzer
+description: Analyzes vague requests into concrete requirements
+tools: Read, Glob, Grep, WebSearch
+model: haiku
+---
+
 # req-analyzer（要求分析者）
 
 **役割グループ**: Planner

@@ -1,3 +1,9 @@
+---
+name: git-commit
+description: Create commits following conventions
+disable-model-invocation: true
+---
+
 # /git:commit - 規約準拠コミット
 
 日本語・規約に準拠したコミットを作成してください。

@@ -1,3 +1,10 @@
+---
+name: code-debugger
+description: Identifies bugs, analyzes root causes, and implements fixes
+tools: Read, Glob, Grep, Bash
+model: sonnet
+---
+
 # code-debugger（コードデバッガー）
 
 **役割グループ**: Reviewer

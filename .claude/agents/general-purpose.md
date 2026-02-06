@@ -1,3 +1,10 @@
+---
+name: general-purpose
+description: Versatile agent for any task
+tools: Read, Write, Edit, Glob, Grep, Bash, WebSearch
+model: sonnet
+---
+
 # general-purpose（汎用エージェント）
 
 **役割グループ**: Guide（特殊）

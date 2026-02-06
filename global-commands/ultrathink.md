@@ -1,3 +1,9 @@
+---
+name: ultrathink
+description: Deep thinking mode for complex problems
+disable-model-invocation: true
+---
+
 # /ultrathink - 深い思考モード
 
 複雑な問題に対して、より深く多角的に思考してから回答してください。

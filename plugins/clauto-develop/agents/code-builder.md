@@ -1,3 +1,10 @@
+---
+name: code-builder
+description: Implements high-quality code based on design specifications
+tools: Read, Write, Edit, Glob, Grep, Bash
+model: sonnet
+---
+
 # code-builder（コードビルダー）
 
 **役割グループ**: Builder
