@@ -1,0 +1,20 @@
+{
+  "name": "clauto-develop",
+  "description": "Claude Code を活用した AI 駆動開発フレームワーク",
+  "version": "1.0.0",
+  "author": {
+    "name": "K-Suzumura"
+  },
+  "license": "Apache-2.0",
+  "keywords": [
+    "ai-driven-development",
+    "subagents",
+    "specification-driven",
+    "code-review",
+    "git-workflow"
+  ],
+  "repository": "https://github.com/K-Suzumura/clauto-develop",
+  "agents": "./agents",
+  "commands": "./commands",
+  "skills": "./skills"
+}

@@ -14,7 +14,26 @@ Claude Code を最大限に活用し、AI と人間が協調して開発を進�
 
 ## クイックスタート
 
-### 方法1: Template Repository から新規プロジェクトを作成（推奨）
+### 方法1: Plugin Marketplace からインストール（推奨）
+
+Claude Code の Plugin Marketplace 機能を使って簡単にインストールできます。
+
+```bash
+# マーケットプレースを追加
+/plugin marketplace add K-Suzumura/clauto-develop
+
+# プラグインをインストール
+/plugin install clauto-develop@clauto-develop
+```
+
+インストール後、以下が使用可能になります：
+- 10種類のサブエージェント
+- 9種類のスキル
+- 13種類のコマンド（`/spec:init`, `/git:commit` など）
+
+---
+
+### 方法2: Template Repository から新規プロジェクトを作成
 
 1. **テンプレートからリポジトリを作成**
 
@@ -57,7 +76,14 @@ Claude Code を最大限に活用し、AI と人間が協調して開発を進�
 
 5. **カスタムコマンド・スキルのインストール（オプション）**
 
-   スラッシュコマンドとスキルを使用する場合：
+   **推奨: Plugin Marketplace からインストール**
+   ```bash
+   /plugin marketplace add K-Suzumura/clauto-develop
+   /plugin install clauto-develop@clauto-develop
+   ```
+
+   <details>
+   <summary>手動インストール（レガシー）</summary>
 
    ```bash
    # カスタムコマンドをグローバルにインストール
@@ -68,6 +94,8 @@ Claude Code を最大限に活用し、AI と人間が協調して開発を進�
    mkdir -p ~/.claude/skills
    cp -r global-skills/* ~/.claude/skills/
    ```
+
+   </details>
 
    これで `/spec:init`, `/git:commit` などのコマンドと、`security-baseline`, `coding-standards` などのスキルが使用可能になります。
 
@@ -99,7 +127,7 @@ Claude Code を最大限に活用し、AI と人間が協調して開発を進�
 
 ---
 
-### 方法2: 既存プロジェクトに導入
+### 方法3: 既存プロジェクトに導入
 
 1. **必要なファイルをコピー**
 
@@ -145,16 +173,16 @@ ECサイト構築を例にした実践的なチュートリアルを用意して
 clauto-develop/
 ├── .claude/
 │   └── agents/              # サブエージェント定義（10種類）
-│       ├── req-analyzer.md      # 要求分析者
-│       ├── spec-planner.md      # 仕様策定者
-│       ├── tech-leader.md       # テックリード
-│       ├── backend-designer.md  # バックエンド設計者
-│       ├── frontend-designer.md # フロントエンド設計者
-│       ├── code-builder.md      # コードビルダー
-│       ├── code-reviewer.md     # コードレビューワー
-│       ├── code-debugger.md     # コードデバッガー
-│       ├── code-guide.md        # コードガイド
-│       └── general-purpose.md   # 汎用エージェント
+├── .claude-plugin/
+│   └── marketplace.json     # Plugin Marketplace 定義
+├── plugins/
+│   └── clauto-develop/      # プラグインパッケージ
+│       ├── .claude-plugin/
+│       │   └── plugin.json  # プラグインマニフェスト
+│       ├── agents/          # サブエージェント（10種類）
+│       ├── commands/        # コマンド（13種類）
+│       ├── skills/          # スキル（9種類）
+│       └── README.md
 ├── docs/
 │   └── specs/               # 仕様書配置用（空）
 ├── src/                     # ソースコード用（空）
@@ -165,8 +193,8 @@ clauto-develop/
 ├── .github/                 # GitHub テンプレート
 │   ├── ISSUE_TEMPLATE/      # Issue テンプレート
 │   └── PULL_REQUEST_TEMPLATE.md
-├── global-commands/         # カスタムコマンド（13種類）
-├── global-skills/           # カスタムスキル（9種類）
+├── global-commands/         # カスタムコマンド（13種類）- レガシー
+├── global-skills/           # カスタムスキル（9種類）- レガシー
 ├── .mcp.json                # Serena MCP設定
 ├── .gitignore               # Git除外設定
 ├── LICENSE                  # Apache License 2.0
@@ -224,9 +252,9 @@ code-reviewer（レビュー）
 
 ---
 
-## カスタムコマンド（オプション）
+## カスタムコマンド
 
-グローバルにインストールすると、以下のスラッシュコマンドが使用可能：
+Plugin Marketplace からインストールすると、以下のスラッシュコマンドが使用可能：
 
 | コマンド | 説明 |
 |---------|------|
@@ -237,23 +265,47 @@ code-reviewer（レビュー）
 | `/qa:full` | フルテスト実行 |
 | `/git:commit` | 規約準拠コミット |
 | `/git:pr` | PR作成 |
+| `/git:branch` | ブランチ作成 |
 | `/gh:commit-push-pr` | commit→push→PR統合 |
+| `/fixup-from-pr-comments` | PRコメント対応 |
+| `/refactor:cleanup` | リファクタリング |
+| `/session:compact-smart` | セッションコンパクト |
+| `/ultrathink` | 深い思考モード |
+
+<details>
+<summary>手動インストール（レガシー）</summary>
+
+```bash
+# カスタムコマンドをグローバルにインストール
+mkdir -p ~/.claude/commands
+cp global-commands/*.md ~/.claude/commands/
+
+# カスタムスキルをグローバルにインストール
+mkdir -p ~/.claude/skills
+cp -r global-skills/* ~/.claude/skills/
+```
+
+</details>
 
 詳細は `framework-docs/ja/06-custom-commands-guide.md` を参照
 
 ---
 
-## カスタムスキル（オプション）
+## カスタムスキル
 
-グローバルにインストールすると、以下のスキルが自動適用：
+Plugin Marketplace からインストールすると、以下のスキルが自動適用：
 
 | スキル | 説明 |
 |-------|------|
-| `spec-reviewer` | 仕様書レビュー基準 |
+| `architecture-reviewer` | アーキテクチャレビュー |
 | `coding-standards` | コーディング規約 |
+| `debug-triage` | デバッグトリアージ |
+| `dependency-change-reviewer` | 依存パッケージ変更レビュー |
 | `pr-reviewer` | PRレビュー基準 |
+| `release-notes-writer` | リリースノート作成 |
 | `security-baseline` | セキュリティチェック |
-| `debug-triage` | デバッグ手法 |
+| `spec-reviewer` | 仕様書レビュー基準 |
+| `test-author` | テスト作成 |
 
 詳細は `framework-docs/ja/04-claude-skills-guide.md` を参照
 
