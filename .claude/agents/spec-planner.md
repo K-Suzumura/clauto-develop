@@ -3,6 +3,7 @@ name: spec-planner
 description: Transforms requirements into implementable technical specifications
 tools: Read, Write, Glob, Grep
 model: sonnet
+skills: spec-reviewer
 ---
 
 # spec-planner（仕様策定者）

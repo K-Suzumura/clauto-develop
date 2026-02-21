@@ -5,6 +5,35 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [v0.4.0] - 2026-02-21
+
+### Changed
+
+- **コマンド→スキル統合**: 13個のカスタムコマンドをスキル形式（`SKILL.md`）に移行
+  - `global-commands/` を廃止し、`global-skills/` に統合
+  - `gh:commit-push-pr` を `commit-push-pr` にリネーム
+  - 各スキルに `user-invocable`, `argument-hint`, `allowed-tools` フィールドを追加
+- **非標準フィールド除去**: スキルの frontmatter から `related_commands`, `related_agents` を除去
+- **エージェントに `skills` フィールド追加**: 5つのエージェントにスキル事前ロードを設定
+  - `code-builder`: `coding-standards`, `test-author`
+  - `code-reviewer`: `pr-reviewer`, `security-baseline`, `coding-standards`
+  - `code-debugger`: `debug-triage`
+  - `spec-planner`: `spec-reviewer`
+  - `tech-leader`: `architecture-reviewer`
+- **プラグインパッケージ更新**: `commands` ディレクトリを廃止し、全スキルを `skills/` に統合
+- バージョンを 1.2.0 に更新
+
+### Removed
+
+- `global-commands/` ディレクトリ（スキルに統合）
+- `plugins/clauto-develop/commands/` ディレクトリ（スキルに統合）
+- plugin.json の `"commands"` フィールド
+
+### Reference
+
+- [Claude Code Skills Documentation](https://docs.anthropic.com/en/docs/claude-code/skills)
+- [Claude Code Best Practices](https://code.claude.com/docs/en/best-practices)
+
 ## [v0.3.0] - 2026-02-06
 
 ### Added

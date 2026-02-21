@@ -1,8 +1,6 @@
 ---
 name: security-baseline
 description: Minimum security review checklist. Use for external I/O, auth, file/network access, and dependency changes.
-related_agents:
-  - code-reviewer
 ---
 
 # セキュリティベースライン Skill

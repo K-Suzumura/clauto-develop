@@ -28,8 +28,8 @@ Claude Code の Plugin Marketplace 機能を使って簡単にインストール
 
 インストール後、以下が使用可能になります：
 - 10種類のサブエージェント
-- 9種類のスキル
-- 13種類のコマンド（`/spec:init`, `/git:commit` など）
+- 22種類のスキル（9リファレンス + 13ワークフロー）
+- ワークフロースキルはスラッシュコマンドとして使用可能（`/spec:init`, `/git:commit` など）
 
 ---
 
@@ -86,18 +86,14 @@ Claude Code の Plugin Marketplace 機能を使って簡単にインストール
    <summary>手動インストール（レガシー）</summary>
 
    ```bash
-   # カスタムコマンドをグローバルにインストール
-   mkdir -p ~/.claude/commands
-   cp global-commands/*.md ~/.claude/commands/
-
-   # カスタムスキルをグローバルにインストール
+   # スキルをグローバルにインストール
    mkdir -p ~/.claude/skills
    cp -r global-skills/* ~/.claude/skills/
    ```
 
    </details>
 
-   これで `/spec:init`, `/git:commit` などのコマンドと、`security-baseline`, `coding-standards` などのスキルが使用可能になります。
+   これで `/spec:init`, `/git:commit` などのワークフロースキルと、`security-baseline`, `coding-standards` などのリファレンススキルが使用可能になります。
 
 6. **Serena MCP の有効化（オプション）**
 
@@ -180,8 +176,7 @@ clauto-develop/
 │       ├── .claude-plugin/
 │       │   └── plugin.json  # プラグインマニフェスト
 │       ├── agents/          # サブエージェント（10種類）
-│       ├── commands/        # コマンド（13種類）
-│       ├── skills/          # スキル（9種類）
+│       ├── skills/          # スキル（22種類: 9リファレンス + 13ワークフロー）
 │       └── README.md
 ├── docs/
 │   └── specs/               # 仕様書配置用（空）
@@ -193,8 +188,7 @@ clauto-develop/
 ├── .github/                 # GitHub テンプレート
 │   ├── ISSUE_TEMPLATE/      # Issue テンプレート
 │   └── PULL_REQUEST_TEMPLATE.md
-├── global-commands/         # カスタムコマンド（13種類）- レガシー
-├── global-skills/           # カスタムスキル（9種類）- レガシー
+├── global-skills/           # スキル（22種類: 9リファレンス + 13ワークフロー）- レガシー
 ├── .mcp.json                # Serena MCP設定
 ├── .gitignore               # Git除外設定
 ├── LICENSE                  # Apache License 2.0
@@ -252,35 +246,31 @@ code-reviewer（レビュー）
 
 ---
 
-## カスタムコマンド
+## ワークフロースキル（スラッシュコマンド）
 
 Plugin Marketplace からインストールすると、以下のスラッシュコマンドが使用可能：
 
-| コマンド | 説明 |
-|---------|------|
-| `/spec:init` | 仕様書テンプレート生成 |
-| `/spec:review` | 仕様書レビュー |
-| `/plan:make` | 実装計画作成 |
-| `/impl:run` | タスク実装実行 |
-| `/qa:full` | フルテスト実行 |
-| `/git:commit` | 規約準拠コミット |
-| `/git:pr` | PR作成 |
-| `/git:branch` | ブランチ作成 |
-| `/gh:commit-push-pr` | commit→push→PR統合 |
-| `/fixup-from-pr-comments` | PRコメント対応 |
-| `/refactor:cleanup` | リファクタリング |
-| `/session:compact-smart` | セッションコンパクト |
-| `/ultrathink` | 深い思考モード |
+| スキル名 | コマンド | 説明 |
+|---------|---------|------|
+| `spec-init` | `/spec:init` | 仕様書テンプレート生成 |
+| `spec-review` | `/spec:review` | 仕様書レビュー |
+| `plan-make` | `/plan:make` | 実装計画作成 |
+| `impl-run` | `/impl:run` | タスク実装実行 |
+| `qa-full` | `/qa:full` | フルテスト実行 |
+| `git-commit` | `/git:commit` | 規約準拠コミット |
+| `git-pr` | `/git:pr` | PR作成 |
+| `git-branch` | `/git:branch` | ブランチ作成 |
+| `commit-push-pr` | `/commit-push-pr` | commit→push→PR統合 |
+| `fixup-from-pr-comments` | `/fixup-from-pr-comments` | PRコメント対応 |
+| `refactor-cleanup` | `/refactor:cleanup` | リファクタリング |
+| `session-compact-smart` | `/session:compact-smart` | セッションコンパクト |
+| `ultrathink` | `/ultrathink` | 深い思考モード |
 
 <details>
 <summary>手動インストール（レガシー）</summary>
 
 ```bash
-# カスタムコマンドをグローバルにインストール
-mkdir -p ~/.claude/commands
-cp global-commands/*.md ~/.claude/commands/
-
-# カスタムスキルをグローバルにインストール
+# スキルをグローバルにインストール
 mkdir -p ~/.claude/skills
 cp -r global-skills/* ~/.claude/skills/
 ```
@@ -291,7 +281,7 @@ cp -r global-skills/* ~/.claude/skills/
 
 ---
 
-## カスタムスキル
+## リファレンススキル
 
 Plugin Marketplace からインストールすると、以下のスキルが自動適用：
 

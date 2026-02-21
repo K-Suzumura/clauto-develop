@@ -1,12 +1,14 @@
-# Command, Skill, and Agent Usage Guide
+# Skill and Agent Usage Guide
 
-The clauto-develop framework provides three types of automation mechanisms. This guide explains each role and appropriate usage.
+The clauto-develop framework provides two types of automation mechanisms. This guide explains each role and appropriate usage.
+
+> **Note**: Since v0.4.0, custom commands have been integrated into skills. Workflows invokable as slash commands are defined as "workflow skills" (`user-invocable: true`).
 
 ---
 
 ## Table of Contents
 
-1. [Overview of the Three Mechanisms](#1-overview-of-the-three-mechanisms)
+1. [Overview of the Two Mechanisms](#1-overview-of-the-two-mechanisms)
 2. [Layer Structure and Role Division](#2-layer-structure-and-role-division)
 3. [Usage by Development Phase](#3-usage-by-development-phase)
 4. [Selection Flowchart](#4-selection-flowchart)
@@ -15,31 +17,35 @@ The clauto-develop framework provides three types of automation mechanisms. This
 
 ---
 
-## 1. Overview of the Three Mechanisms
+## 1. Overview of the Two Mechanisms
 
-### 1.1 Custom Commands
+### 1.1 Skills
 
-| Item | Content |
-|------|---------|
-| **Role** | Workflow automation |
-| **Invocation** | User explicitly invokes with `/command-name` |
-| **Characteristics** | Auto-executes series of tasks, includes interactive confirmations |
-| **Location** | `~/.claude/commands/` (global) or `.claude/commands/` (project) |
+Skills are classified into two types:
 
-**Examples**: `/spec:init`, `/git:commit`, `/qa:full`
-
-### 1.2 Custom Skills
+#### Reference Skills
 
 | Item | Content |
 |------|---------|
 | **Role** | Quality standards, checklists, output templates |
-| **Invocation** | Claude auto-applies based on context, or user explicitly requests |
+| **Invocation** | Claude auto-applies based on context, or pre-loaded via agent `skills` field |
 | **Characteristics** | Defines judgment criteria and expected output format |
 | **Location** | `~/.claude/skills/` (global) or `.claude/skills/` (project) |
 
 **Examples**: `security-baseline`, `coding-standards`, `spec-reviewer`
 
-### 1.3 Subagents
+#### Workflow Skills (Slash Commands)
+
+| Item | Content |
+|------|---------|
+| **Role** | Workflow automation |
+| **Invocation** | User explicitly invokes with `/skill-name` |
+| **Characteristics** | Auto-executes series of tasks, includes interactive confirmations. Defined with `user-invocable: true` |
+| **Location** | `~/.claude/skills/` (global) or `.claude/skills/` (project) |
+
+**Examples**: `/spec:init`, `/git:commit`, `/qa:full`
+
+### 1.2 Subagents
 
 | Item | Content |
 |------|---------|
@@ -56,25 +62,18 @@ The clauto-develop framework provides three types of automation mechanisms. This
 
 ```
 ┌─────────────────────────────────────────────────────────────────────┐
-│                     Custom Commands                                  │
+│                     Skills                                           │
 │                                                                     │
-│  Workflow layer that defines "what to do"                           │
-│  - User explicitly invokes                                          │
+│  Workflow Skills (user-invocable: true)                             │
+│  - User explicitly invokes with /skill-name                         │
 │  - Automates series of work procedures                              │
-│  - Can use Skills/Agents internally                                 │
-│                                                                     │
+│  - Can restrict tools with allowed-tools                            │
 │  Example: /spec:init → Generate template → Insert TODOs → Suggest   │
-└───────────────────────────────┬─────────────────────────────────────┘
-                                │ Reference/Use
-                                ▼
-┌─────────────────────────────────────────────────────────────────────┐
-│                     Custom Skills                                    │
 │                                                                     │
-│  Standards layer that defines "how to judge"                        │
+│  Reference Skills                                                   │
 │  - Checklists and judgment criteria                                 │
 │  - Output templates and formats                                     │
-│  - Domain-specific expert knowledge                                 │
-│                                                                     │
+│  - Can be pre-loaded via agent skills field                         │
 │  Example: security-baseline → 10 security checks → Severity rating  │
 └───────────────────────────────┬─────────────────────────────────────┘
                                 │ Reference/Use
@@ -85,6 +84,7 @@ The clauto-develop framework provides three types of automation mechanisms. This
 │  Persona layer that defines "who to act as"                         │
 │  - Specific roles and responsibilities                              │
 │  - Reference scope restrictions (security)                          │
+│  - Pre-load skills via skills field                                 │
 │  - Coordination flow with other agents                              │
 │                                                                     │
 │  Example: code-reviewer → Reference src/tests → Review → code-builder│
@@ -93,12 +93,12 @@ The clauto-develop framework provides three types of automation mechanisms. This
 
 ### 2.1 Usage Principles
 
-| Aspect | Command | Skill | Agent |
-|--------|---------|-------|-------|
-| **Invoker** | User | Claude (auto) | Claude (auto) |
+| Aspect | Workflow Skill | Reference Skill | Agent |
+|--------|----------------|-----------------|-------|
+| **Invoker** | User | Claude (auto) / Agent | Claude (auto) |
 | **Granularity** | Entire workflow | Check/judgment | Task execution |
 | **State** | Interactive | Reference | Autonomous |
-| **Reference Restriction** | None | None | Yes |
+| **Reference Restriction** | allowed-tools | None | Yes |
 | **Output** | Next action suggestions | Judgment results/reports | Deliverables |
 
 ---
@@ -109,9 +109,9 @@ The clauto-develop framework provides three types of automation mechanisms. This
 
 | Task | Mechanism | Reason |
 |------|-----------|--------|
-| Spec template generation | `/spec:init` (Command) | User-invoked workflow |
+| Spec template generation | `/spec:init` (Workflow Skill) | User-invoked workflow |
 | Spec creation | `spec-planner` (Agent) | Creates specs as expert |
-| Spec review | `/spec:review` → `spec-reviewer` | Command for workflow, Skill for standards |
+| Spec review | `/spec:review` → `spec-reviewer` | Workflow skill for flow, Reference skill for standards |
 
 ### 3.2 Design Phase
 
@@ -119,26 +119,26 @@ The clauto-develop framework provides three types of automation mechanisms. This
 |------|-----------|--------|
 | Technology selection | `tech-leader` (Agent) | Trade-off analysis needed |
 | Architecture review | `architecture-reviewer` (Skill) | Checklist-based judgment |
-| Implementation plan creation | `/plan:make` (Command) | Task decomposition workflow |
+| Implementation plan creation | `/plan:make` (Workflow Skill) | Task decomposition workflow |
 
 ### 3.3 Implementation Phase
 
 | Task | Mechanism | Reason |
 |------|-----------|--------|
-| Task implementation | `/impl:run` (Command) | Implementation workflow per plan |
+| Task implementation | `/impl:run` (Workflow Skill) | Implementation workflow per plan |
 | Coding standard check | `coding-standards` (Skill) | Standards-based check |
 | Test creation | `test-author` (Skill) | Test pattern application |
-| Test execution | `/qa:full` (Command) | Execution → result organization workflow |
+| Test execution | `/qa:full` (Workflow Skill) | Execution → result organization workflow |
 
 ### 3.4 Review & Release Phase
 
 | Task | Mechanism | Reason |
 |------|-----------|--------|
-| Commit | `/git:commit` (Command) | Git operation workflow |
-| PR creation | `/git:pr` (Command) | Git operation workflow |
+| Commit | `/git:commit` (Workflow Skill) | Git operation workflow |
+| PR creation | `/git:pr` (Workflow Skill) | Git operation workflow |
 | PR review | `pr-reviewer` (Skill) + `code-reviewer` (Agent) | Standards application + expert judgment |
 | Security check | `security-baseline` (Skill) | Security checklist |
-| Review response | `/fixup-from-pr-comments` (Command) | Fix workflow |
+| Review response | `/fixup-from-pr-comments` (Workflow Skill) | Fix workflow |
 | Release notes | `release-notes-writer` (Skill) | Template application |
 
 ### 3.5 Maintenance Phase
@@ -146,7 +146,7 @@ The clauto-develop framework provides three types of automation mechanisms. This
 | Task | Mechanism | Reason |
 |------|-----------|--------|
 | Debugging | `code-debugger` (Agent) → `debug-triage` (Skill) | Agent executes, Skill provides method |
-| Refactoring | `/refactor:cleanup` (Command) | Cleanup workflow |
+| Refactoring | `/refactor:cleanup` (Workflow Skill) | Cleanup workflow |
 | Dependency updates | `dependency-change-reviewer` (Skill) | Risk evaluation criteria |
 
 ---
@@ -157,18 +157,18 @@ The clauto-develop framework provides three types of automation mechanisms. This
 Enter "what you want to do"
         │
         ▼
-┌───────────────────────┐
-│ Want to invoke        │
-│ explicitly?           │
-└───────────────────────┘
+┌───────────────────────────┐
+│ Want to invoke explicitly  │
+│ as a slash command?        │
+└───────────────────────────┘
         │
    ┌────┴────┐
    ▼         ▼
   Yes        No
    │         │
    ▼         ▼
-Command   ┌────────────────────────┐
-          │ Need judgment criteria? │
+Workflow  ┌────────────────────────┐
+Skill     │ Need judgment criteria? │
           │ Or need task execution? │
           └────────────────────────┘
                     │
@@ -178,25 +178,26 @@ Command   ┌──────────────────────�
          Criteria        │
               │           │
               ▼           ▼
-            Skill       Agent
+         Reference      Agent
+           Skill
 ```
 
 ### Quick Decision Table
 
 | What You Want | Selection |
 |---------------|-----------|
-| "I want to start..." "Execute..." | **Command** |
-| "Check..." "Judge by criteria..." | **Skill** |
+| "I want to start..." "Execute..." | **Workflow Skill** (slash command) |
+| "Check..." "Judge by criteria..." | **Reference Skill** |
 | "Think as..." "Analyze from perspective..." | **Agent** |
 
 ---
 
 ## 5. Cross-Reference Map
 
-### 5.1 Command → Skill/Agent
+### 5.1 Workflow Skill → Reference Skill/Agent
 
-| Command | Related Skill | Related Agent |
-|---------|---------------|---------------|
+| Workflow Skill | Related Reference Skill | Related Agent |
+|----------------|-------------------------|---------------|
 | `/spec:init` | - | `spec-planner` |
 | `/spec:review` | `spec-reviewer` | - |
 | `/plan:make` | - | `spec-planner` |
@@ -205,37 +206,37 @@ Command   ┌──────────────────────�
 | `/git:commit` | - | - |
 | `/git:pr` | `pr-reviewer` | - |
 | `/git:branch` | - | - |
-| `/gh:commit-push-pr` | `pr-reviewer` | - |
+| `/commit-push-pr` | `pr-reviewer` | - |
 | `/fixup-from-pr-comments` | - | `code-builder` |
 | `/refactor:cleanup` | `coding-standards` | - |
 | `/session:compact-smart` | - | - |
 | `/ultrathink` | - | - |
 
-### 5.2 Skill → Command/Agent
+### 5.2 Reference Skill → Workflow Skill/Agent
 
-| Skill | Related Command | Related Agent |
-|-------|-----------------|---------------|
+| Reference Skill | Related Workflow Skill | Related Agent (skills field) |
+|-----------------|------------------------|------------------------------|
 | `spec-reviewer` | `/spec:review` | `spec-planner` |
 | `architecture-reviewer` | - | `tech-leader` |
-| `coding-standards` | `/impl:run`, `/refactor:cleanup` | `code-builder` |
-| `test-author` | `/qa:full` | - |
+| `coding-standards` | `/impl:run`, `/refactor:cleanup` | `code-builder`, `code-reviewer` |
+| `test-author` | `/qa:full` | `code-builder` |
 | `debug-triage` | - | `code-debugger` |
-| `pr-reviewer` | `/git:pr`, `/gh:commit-push-pr` | `code-reviewer` |
+| `pr-reviewer` | `/git:pr`, `/commit-push-pr` | `code-reviewer` |
 | `security-baseline` | - | `code-reviewer` |
 | `dependency-change-reviewer` | - | `tech-leader` |
 | `release-notes-writer` | - | - |
 
-### 5.3 Agent → Command/Skill
+### 5.3 Agent → Workflow Skill/Reference Skill
 
-| Agent | Related Command | Related Skill |
-|-------|-----------------|---------------|
+| Agent | Related Workflow Skill | Pre-loaded Skills (skills field) |
+|-------|------------------------|----------------------------------|
 | `req-analyzer` | `/spec:init` | - |
 | `spec-planner` | `/spec:init`, `/plan:make` | `spec-reviewer` |
-| `tech-leader` | - | `architecture-reviewer`, `dependency-change-reviewer` |
-| `frontend-designer` | - | `coding-standards` |
-| `backend-designer` | - | `coding-standards` |
+| `tech-leader` | - | `architecture-reviewer` |
+| `frontend-designer` | - | - |
+| `backend-designer` | - | - |
 | `code-builder` | `/impl:run`, `/fixup-from-pr-comments` | `coding-standards`, `test-author` |
-| `code-reviewer` | `/git:pr` | `pr-reviewer`, `security-baseline` |
+| `code-reviewer` | `/git:pr` | `pr-reviewer`, `security-baseline`, `coding-standards` |
 | `code-debugger` | - | `debug-triage` |
 | `code-guide` | - | - |
 | `general-purpose` | - | - |
@@ -244,16 +245,16 @@ Command   ┌──────────────────────�
 
 ## 6. FAQ
 
-### Q1: When both Command and Skill have similar functions?
+### Q1: When both Workflow Skill and Reference Skill have similar functions?
 
-**A**: Prioritize Command. Commands manage the entire workflow and use Skill standards internally as needed.
+**A**: Prioritize the Workflow Skill (slash command). Workflow skills manage the entire workflow and use reference skill standards internally as needed.
 
-Example: For spec review, execute `/spec:review`. Internally, `spec-reviewer` Skill standards are applied.
+Example: For spec review, execute `/spec:review`. Internally, `spec-reviewer` reference skill standards are applied.
 
-### Q2: When both Skill and Agent have similar functions?
+### Q2: When both Reference Skill and Agent have similar functions?
 
 **A**: Judge by task nature.
-- Check/judgment is main purpose → **Skill**
+- Check/judgment is main purpose → **Reference Skill**
 - Task execution/deliverable creation is main purpose → **Agent**
 
 Example: Debugging is handled by `code-debugger` (Agent). It references `debug-triage` (Skill) for investigation methods.
@@ -264,8 +265,8 @@ Example: Debugging is handled by `code-debugger` (Agent). It references `debug-t
 
 | Characteristic | Create |
 |----------------|--------|
-| Want user to invoke with "/xxx" | Command |
-| Want to define judgment criteria/checklist | Skill |
+| Want user to invoke with "/xxx" | Workflow Skill (`user-invocable: true`) |
+| Want to define judgment criteria/checklist | Reference Skill |
 | Want specific role/reference scope | Agent |
 
 ### Q4: Can multiple mechanisms be used for one task?
@@ -275,9 +276,9 @@ Example: Debugging is handled by `code-debugger` (Agent). It references `debug-t
 ```
 User: Execute /git:pr
     │
-    ├─→ Command: /git:pr starts workflow
+    ├─→ Workflow Skill: /git:pr starts workflow
     │       │
-    │       ├─→ Skill: Generate PR body using pr-reviewer standards
+    │       ├─→ Reference Skill: Generate PR body using pr-reviewer standards
     │       │
     │       └─→ Agent: Add review perspectives from code-reviewer view
     │
@@ -288,27 +289,10 @@ User: Execute /git:pr
 
 ## Appendix: Definition File List
 
-### Commands (13)
-```
-~/.claude/commands/
-├── spec-init.md          # Spec template generation
-├── spec-review.md        # Spec review
-├── plan-make.md          # Implementation plan creation
-├── impl-run.md           # Task implementation
-├── qa-full.md            # Full testing
-├── git-branch.md         # Branch creation
-├── git-commit.md         # Commit
-├── git-pr.md             # PR creation
-├── gh:commit-push-pr.md  # Integrated workflow
-├── fixup-from-pr-comments.md  # Review response
-├── refactor-cleanup.md   # Refactoring
-├── session-compact-smart.md   # Session organization
-└── ultrathink.md         # Deep thinking mode
-```
-
-### Skills (9)
+### Skills (22 = 9 reference + 13 workflow)
 ```
 ~/.claude/skills/
+# Reference Skills (9)
 ├── spec-reviewer/        # Spec review standards
 ├── architecture-reviewer/# Architecture review
 ├── coding-standards/     # Coding standards
@@ -317,7 +301,21 @@ User: Execute /git:pr
 ├── pr-reviewer/          # PR review standards
 ├── security-baseline/    # Security checks
 ├── dependency-change-reviewer/  # Dependency update review
-└── release-notes-writer/ # Release notes creation
+├── release-notes-writer/ # Release notes creation
+# Workflow Skills (13, user-invocable: true)
+├── spec-init/            # /spec:init - Spec template generation
+├── spec-review/          # /spec:review - Spec review
+├── plan-make/            # /plan:make - Implementation plan creation
+├── impl-run/             # /impl:run - Task implementation
+├── qa-full/              # /qa:full - Full testing
+├── git-branch/           # /git:branch - Branch creation
+├── git-commit/           # /git:commit - Commit
+├── git-pr/               # /git:pr - PR creation
+├── commit-push-pr/       # /commit-push-pr - Integrated workflow
+├── fixup-from-pr-comments/   # /fixup-from-pr-comments - Review response
+├── refactor-cleanup/     # /refactor:cleanup - Refactoring
+├── session-compact-smart/    # /session:compact-smart - Session organization
+└── ultrathink/           # /ultrathink - Deep thinking mode
 ```
 
 ### Agents (10)

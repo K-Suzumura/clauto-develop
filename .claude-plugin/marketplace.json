@@ -1,23 +1,23 @@
 {
   "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
   "name": "clauto-develop",
-  "version": "1.1.0",
-  "description": "Claude Code を活用した AI 駆動開発フレームワーク - サブエージェント、スキル、コマンドの統合パッケージ",
+  "version": "1.2.0",
+  "description": "Claude Code を活用した AI 駆動開発フレームワーク - サブエージェント、スキルの統合パッケージ",
   "owner": {
     "name": "K-Suzumura",
     "email": "contact@example.com"
   },
   "metadata": {
-    "description": "仕様駆動開発のためのサブエージェント群とカスタムスキル・コマンドを提供します",
-    "version": "1.1.0",
+    "description": "仕様駆動開発のためのサブエージェント群とスキルを提供します",
+    "version": "1.2.0",
     "pluginRoot": "./plugins"
   },
   "plugins": [
     {
       "name": "clauto-develop",
       "source": "./clauto-develop",
-      "description": "AI駆動開発フレームワーク - 10種類のサブエージェント、9種類のスキル、13種類のコマンドを含む統合パッケージ",
-      "version": "1.1.0",
+      "description": "AI駆動開発フレームワーク - 10種類のサブエージェント、22種類のスキル（9リファレンス + 13ワークフロー）を含む統合パッケージ",
+      "version": "1.2.0",
       "author": {
         "name": "K-Suzumura"
       },

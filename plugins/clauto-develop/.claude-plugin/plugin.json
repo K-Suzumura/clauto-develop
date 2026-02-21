@@ -1,7 +1,7 @@
 {
   "name": "clauto-develop",
   "description": "Claude Code を活用した AI 駆動開発フレームワーク",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "author": {
     "name": "K-Suzumura"
   },
@@ -17,7 +17,6 @@
   "repository": "https://github.com/K-Suzumura/clauto-develop",
   "homepage": "https://github.com/K-Suzumura/clauto-develop",
   "agents": "./agents",
-  "commands": "./commands",
   "skills": "./skills",
   "mcpServers": {
     "serena": {

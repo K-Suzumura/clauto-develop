@@ -1,11 +1,6 @@
 ---
 name: pr-reviewer
 description: Fixed PR review criteria. Checks spec compliance, test coverage, and safety.
-related_commands:
-  - /git:pr
-  - /gh:commit-push-pr
-related_agents:
-  - code-reviewer
 ---
 
 # PRレビュー Skill

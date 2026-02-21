@@ -1,6 +1,8 @@
-# Custom Commands Guide
+# Workflow Skills Guide (formerly Custom Commands Guide)
 
-A list and usage guide for custom commands (slash commands) used in the clauto-develop framework.
+A list and usage guide for workflow skills (slash commands) used in the clauto-develop framework.
+
+> **Note**: Since v0.4.0, custom commands have been integrated into skill format (`SKILL.md`). Usage as slash commands remains unchanged.
 
 ---
 
@@ -14,15 +16,15 @@ A list and usage guide for custom commands (slash commands) used in the clauto-d
 6. [Git Operations](#6-git-operations)
 7. [Integrated Workflows](#7-integrated-workflows)
 8. [Maintenance & Operations](#8-maintenance--operations)
-9. [Command Placement](#9-command-placement)
+9. [Skill Placement](#9-skill-placement)
 
 ---
 
 ## 1. Overview
 
-### 1.1 What are Custom Commands
+### 1.1 What are Workflow Skills
 
-Custom commands are slash commands that automate and standardize repetitive tasks. By placing Markdown files in `~/.claude/commands/`, they can be used across all projects.
+Workflow skills are slash commands that automate and standardize repetitive tasks. By placing skill directories (`SKILL.md`) in `~/.claude/skills/`, they can be used across all projects. The `user-invocable: true` field makes them invokable as slash commands.
 
 ### 1.2 Design Philosophy
 
@@ -53,12 +55,12 @@ Spec Creation → Plan Creation → Implementation → Testing → Commit → PR
 
 ### 2.2 Global Installation
 
-To use custom commands in all projects, run the following commands:
+To use workflow skills in all projects, run the following commands:
 
 ```bash
 # Run from the clauto-develop repository root directory
-mkdir -p ~/.claude/commands
-cp global-commands/*.md ~/.claude/commands/
+mkdir -p ~/.claude/skills
+cp -r global-skills/* ~/.claude/skills/
 ```
 
 ### 2.3 Verify Installation
@@ -75,7 +77,7 @@ You can see the command list with `/help`.
 ### 2.4 Uninstall
 
 ```bash
-rm ~/.claude/commands/*.md
+rm -rf ~/.claude/skills/*/
 ```
 
 ---
@@ -259,7 +261,7 @@ rm ~/.claude/commands/*.md
 
 ## 7. Integrated Workflows
 
-### 7.1 /gh:commit-push-pr - Integrated Version
+### 7.1 /commit-push-pr - Integrated Version
 
 | Item | Content |
 |------|---------|
@@ -269,7 +271,7 @@ rm ~/.claude/commands/*.md
 
 **Usage:**
 ```
-/gh:commit-push-pr
+/commit-push-pr
 ```
 
 **Execution Flow:**
@@ -364,43 +366,50 @@ rm ~/.claude/commands/*.md
 
 ---
 
-## 9. Command Placement
+## 9. Skill Placement
 
-### 9.1 Global Commands
+### 9.1 Global Workflow Skills
 
-Commands used across all projects are placed in `~/.claude/commands/`.
+Workflow skills used across all projects are placed in `~/.claude/skills/`.
 
 ```
-~/.claude/commands/
-├── spec-init.md
-├── spec-review.md
-├── plan-make.md
-├── impl-run.md
-├── qa-full.md
-├── git-branch.md
-├── git-commit.md
-├── git-pr.md
-├── gh:commit-push-pr.md
-├── fixup-from-pr-comments.md
-├── refactor-cleanup.md
-├── session-compact-smart.md
-└── ultrathink.md
+~/.claude/skills/
+├── spec-init/            # /spec:init
+├── spec-review/          # /spec:review
+├── plan-make/            # /plan:make
+├── impl-run/             # /impl:run
+├── qa-full/              # /qa:full
+├── git-branch/           # /git:branch
+├── git-commit/           # /git:commit
+├── git-pr/               # /git:pr
+├── commit-push-pr/       # /commit-push-pr
+├── fixup-from-pr-comments/   # /fixup-from-pr-comments
+├── refactor-cleanup/     # /refactor:cleanup
+├── session-compact-smart/    # /session:compact-smart
+└── ultrathink/           # /ultrathink
 ```
 
-### 9.2 Project-Specific Commands
+### 9.2 Project-Specific Workflow Skills
 
-Commands used only in specific projects are placed in `.claude/commands/`.
+Workflow skills used only in specific projects are placed in `.claude/skills/`.
 
 ```
 project/
 └── .claude/
-    └── commands/
-        └── project-specific-command.md
+    └── skills/
+        └── project-specific-skill/
+            └── SKILL.md
 ```
 
-### 9.3 Command File Format
+### 9.3 Skill File Format
 
 ```markdown
+---
+name: skill-name
+description: Skill description
+user-invocable: true
+---
+
 # /command-name - Command description
 
 Detailed instructions for the command here.
@@ -415,9 +424,9 @@ Detailed instructions for the command here.
 
 ---
 
-## Command Quick Reference
+## Workflow Skill Quick Reference
 
-| Command | Phase | Purpose |
+| Skill (Slash Command) | Phase | Purpose |
 |---------|-------|---------|
 | `/spec:init` | Specification | Generate spec template |
 | `/spec:review` | Specification | Check spec quality |
@@ -427,7 +436,7 @@ Detailed instructions for the command here.
 | `/git:branch` | Git | Create branch |
 | `/git:commit` | Git | Standard-compliant commit |
 | `/git:pr` | Git | Create PR |
-| `/gh:commit-push-pr` | Git | Integrated commit→push→PR |
+| `/commit-push-pr` | Git | Integrated commit→push→PR |
 | `/fixup-from-pr-comments` | Git | Review response |
 | `/refactor:cleanup` | Maintenance | Code cleanup |
 | `/session:compact-smart` | Operations | Session organization |

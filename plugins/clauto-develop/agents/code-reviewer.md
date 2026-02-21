@@ -3,6 +3,7 @@ name: code-reviewer
 description: Reviews code quality, security, and performance
 tools: Read, Glob, Grep
 model: opus
+skills: pr-reviewer, security-baseline, coding-standards
 ---
 
 # code-reviewer（コードレビューワー）

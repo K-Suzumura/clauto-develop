@@ -3,6 +3,7 @@ name: tech-leader
 description: Makes technical decisions and designs architecture
 tools: Read, Glob, Grep, WebSearch
 model: opus
+skills: architecture-reviewer
 ---
 
 # tech-leader（テックリード）

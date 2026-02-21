@@ -1,11 +1,6 @@
 ---
 name: coding-standards
 description: Apply team coding standards during implementation and review. Covers naming, exception design, logging, and comments.
-related_commands:
-  - /impl:run
-  - /refactor:cleanup
-related_agents:
-  - code-builder
 ---
 
 # コーディング規約 Skill

@@ -3,6 +3,7 @@ name: code-debugger
 description: Identifies bugs, analyzes root causes, and implements fixes
 tools: Read, Glob, Grep, Bash
 model: sonnet
+skills: debug-triage
 ---
 
 # code-debugger（コードデバッガー）

@@ -1,10 +1,6 @@
 ---
 name: spec-reviewer
 description: Spec quality gate. Detects ambiguity, gaps, and contradictions. Use before implementation or after spec changes.
-related_commands:
-  - /spec:review
-related_agents:
-  - spec-planner
 ---
 
 # 仕様書レビュー Skill

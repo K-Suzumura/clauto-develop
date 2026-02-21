@@ -1,8 +1,6 @@
 ---
 name: debug-triage
 description: Systematic debugging from logs, stack traces, and repro steps. Use for unknown bugs, CI failures, and performance issues.
-related_agents:
-  - code-debugger
 ---
 
 # デバッグトリアージ Skill
