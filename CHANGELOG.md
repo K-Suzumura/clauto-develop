@@ -5,6 +5,24 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [v0.5.0] - 2026-02-21
+
+### Changed
+
+- **Serena MCP の位置づけ変更**: 「必要」→「推奨（特定条件で有効）」に変更
+  - 7エージェント（code-builder, code-reviewer, code-debugger, code-guide, backend-designer, frontend-designer, tech-leader）の Serena セクションを `✅ 必要` から `⚡ 推奨` に更新
+  - 統合ガイド（JA/EN）のセクション 1.2 を「なぜSerenaが必要か」→「Serenaが有効なケース」に変更
+  - README の Serena セクションを更新し「推奨条件」列を追加
+- バージョンを 1.3.0 に更新
+
+### Added
+
+- **導入判断フローチャート**（セクション 1.4）: プロジェクト規模・ポリグロット・継続作業の3軸で判断
+- **プロジェクトメモリ**（セクション 3.5）: `.serena/memories/` ディレクトリのドキュメント
+- **事前インデックス**（セクション 3.6）: `serena project index` コマンドのドキュメント
+- **言語別の追加要件**（セクション 3.7）: Go, Rust, Vue の要件を明記
+- **ヘルスチェック**（セクション 3.8）: `serena health` コマンドのドキュメント
+
 ## [v0.4.0] - 2026-02-21
 
 ### Changed

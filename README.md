@@ -301,9 +301,9 @@ Plugin Marketplace からインストールすると、以下のスキルが自�
 
 ---
 
-## Serena MCP（推奨）
+## Serena MCP（オプション・推奨）
 
-Serena は LSP（Language Server Protocol）を活用したコードのセマンティック理解・編集ツールです。サブエージェントと組み合わせることで、より高精度なコード操作が可能になります。
+Serena は LSP（Language Server Protocol）を活用したコードのセマンティック理解・編集ツールです。Claude Code単体でも開発は可能ですが、大規模プロジェクトではSerenaのセマンティック解析が効果を発揮します。
 
 ### 主な機能
 
@@ -325,12 +325,15 @@ claude mcp add serena -- uvx --from git+https://github.com/oraios/serena serena 
 
 ### サブエージェントとの連携
 
-| エージェント | Serena活用 |
-|-------------|-----------|
-| code-guide | シンボル検索、定義ジャンプでナビゲーション精度向上 |
-| code-builder | セマンティック編集、影響範囲の特定 |
-| code-reviewer | 参照関係の追跡、診断情報の取得 |
-| code-debugger | コールスタック追跡、原因追跡 |
+| エージェント | Serena活用 | 推奨条件 |
+|-------------|-----------|---------|
+| code-builder | セマンティック編集、影響範囲の特定 | 大規模コードベース |
+| code-reviewer | 参照関係の追跡、診断情報の取得 | 参照追跡が頻繁 |
+| code-debugger | コールスタック追跡、原因追跡 | コールスタック分析 |
+| code-guide | シンボル検索、定義ジャンプ | ナビゲーション精度向上 |
+| backend-designer | API構造・データモデルの把握 | 大規模API |
+| frontend-designer | コンポーネント構造の把握 | 大規模UI |
+| tech-leader | アーキテクチャ把握 | 大規模アーキテクチャ |
 
 詳細は `framework-docs/ja/08-serena-integration-guide.md` を参照
 

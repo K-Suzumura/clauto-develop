@@ -41,7 +41,7 @@ skills: pr-reviewer, security-baseline, coding-standards
 | Grep | パターン検索（アンチパターン検出等） |
 
 ### Serena（MCP）
-✅ **必要** - 参照関係の追跡、診断情報の取得に有効
+⚡ **推奨** - 大規模コードベースでの参照関係追跡に効果大
 
 | ツール | 用途 |
 |--------|------|

@@ -1,6 +1,6 @@
 # Serena MCP Integration Guide
 
-Serena is an MCP server that provides semantic code understanding and editing capabilities using LSP (Language Server Protocol). Combined with this framework's subagents, it enables more precise code operations.
+Serena is an MCP server that provides semantic code understanding and editing capabilities using LSP (Language Server Protocol). While Claude Code alone can handle development tasks, Serena's semantic analysis is particularly effective for large-scale projects.
 
 ---
 
@@ -30,7 +30,14 @@ Serena is a toolkit for AI coding agents with the following features:
 | **IDE-level Features** | Go to definition, find references, refactoring, etc. |
 | **MCP Compatible** | Seamless integration with Claude Code |
 
-### 1.2 Why Serena is Needed
+### 1.2 When Serena is Most Effective
+
+Claude Code can handle development tasks effectively with basic tools like Glob/Grep/Read alone. However, Serena's semantic analysis provides significant value under the following conditions:
+
+- **Large codebases** (hundreds of files or more): Glob/Grep returns too many candidates, becoming inefficient
+- **Frequent reference and call hierarchy tracking**: Manual Grep is prone to tracking omissions
+- **Semantic refactoring such as renames**: Text replacement alone is insufficient
+- **Token consumption optimization**: Semantic search retrieves only the minimum necessary code
 
 Differences from regular file search (Glob, Grep):
 
@@ -62,6 +69,23 @@ Differences from regular file search (Glob, Grep):
 | Systems | Rust, Go, C, C++ |
 | JVM | Java, Kotlin, Scala, Groovy |
 | Others | C#, PHP, Swift, Lua, etc. |
+
+### 1.4 Adoption Decision Flowchart
+
+```
+Project size?
+  ├─ Small (~50 files) → Not needed (Glob/Grep sufficient)
+  ├─ Medium (50-200 files) → Optional (effective if frequent reference tracking)
+  └─ Large (200+ files) → Recommended (semantic analysis highly effective)
+
+Polyglot (multi-language) project?
+  ├─ Yes → Recommended (effective for structural understanding in LSP-supported languages)
+  └─ No → Decide based on project size above
+
+Continuous work on the same project?
+  ├─ Yes → Recommended (project memory and pre-indexing accumulate)
+  └─ No → Decide based on project size above
+```
 
 ---
 
@@ -177,6 +201,49 @@ exclude_patterns:
   - "**/.git/**"
 ```
 
+### 3.5 Project Memory (`.serena/memories/`)
+
+A directory where Serena accumulates project-specific knowledge:
+
+- Learns codebase structure, patterns, and conventions
+- Knowledge persists across sessions
+- Recommended to add `.serena/memories/` to `.gitignore`
+
+```yaml
+# Add to .gitignore
+.serena/memories/
+```
+
+### 3.6 Pre-indexing (`serena project index`)
+
+A command to build the index before first startup:
+
+```bash
+# Pre-build project index
+serena project index
+```
+
+- Significantly improves initial response speed for large projects
+- Can be integrated into CI/CD pipelines
+
+### 3.7 Language-Specific Requirements
+
+| Language | Additional Requirements |
+|----------|----------------------|
+| Go | `gopls` installation required |
+| Rust | Toolchain via `rustup` required |
+| Vue | Node.js v18+ required |
+
+### 3.8 Health Check
+
+```bash
+# Check language server status
+serena health
+```
+
+- Lists startup status and version of each language server
+- Suggests fixes when problems are detected
+
 ---
 
 ## 4. Available Tools
@@ -219,12 +286,16 @@ exclude_patterns:
 
 | Agent | Serena Use | Main Purpose |
 |-------|------------|--------------|
-| **code-guide** | ✅ Needed (read-only) | Improved navigation accuracy with symbol search, definition jump |
-| **code-builder** | ✅ Needed (full features) | Semantic editing, impact scope identification |
-| **code-reviewer** | ✅ Needed (read-only) | Reference tracking, diagnostics retrieval |
-| **code-debugger** | ✅ Needed (read-only) | Call stack tracking, cause tracing |
+| **code-builder** | ⚡ Recommended (highly effective for large codebases) | Semantic editing, impact scope identification |
+| **code-reviewer** | ⚡ Recommended (highly effective for reference tracking) | Reference tracking, diagnostics retrieval |
+| **code-debugger** | ⚡ Recommended (highly effective for call stack tracking) | Call stack tracking, cause tracing |
+| **code-guide** | ⚡ Recommended (improved navigation accuracy) | Symbol search, definition jump |
+| **backend-designer** | ⚡ Recommended (highly effective for API structure) | API structure, data model comprehension |
+| **frontend-designer** | ⚡ Recommended (highly effective for component structure) | Component structure comprehension |
+| **tech-leader** | ⚡ Recommended (highly effective for architecture) | Architecture comprehension, symbol analysis |
 | **general-purpose** | ⚠️ Optional | Use as needed |
-| **Others** | ❌ Not needed | Basic tools sufficient |
+| **spec-planner** | ❌ Not needed | Spec-level work |
+| **req-analyzer** | ❌ Not needed | Requirements-level work |
 
 ### 5.2 Integration Flow
 
@@ -240,20 +311,20 @@ exclude_patterns:
     │ ※ Serena not needed (spec-level work)
     ▼
 [Design] backend-designer / frontend-designer
-    │ ※ Serena not needed (design-level work)
+    │ ※ Serena not needed (design-level work) ※ Effective for structural understanding in large projects
     ▼
-[Implementation] code-builder ← Full Serena usage
+[Implementation] code-builder ← Serena recommended
     │   - get_symbols: Understand existing structure
     │   - find_references: Check impact scope
     │   - apply_edit: Semantic refactoring
     │   - get_diagnostics: Check errors
     ▼
-[Review] code-reviewer ← Serena read-only usage
+[Review] code-reviewer ← Serena recommended (read-only)
     │   - get_call_hierarchy: Check call relationships
     │   - find_references: Check change impact scope
     │   - get_diagnostics: Check static analysis results
     ▼
-[Debug] code-debugger ← Serena read-only usage
+[Debug] code-debugger ← Serena recommended (read-only)
         - go_to_definition: Trace cause
         - get_call_hierarchy: Call stack analysis
         - get_hover_info: Check type info
@@ -408,7 +479,8 @@ exclude_patterns:
 | Simple text search | Grep is faster |
 | Config file editing | Basic tools sufficient |
 | New file creation | Use Write tool |
-| Small projects | Overhead is large |
+| Small projects (~50 files) | Glob/Grep is sufficient. Serena setup/startup overhead is significant |
+| Cases where Claude Code basic tools suffice | When Glob/Grep/Read can achieve the goal, Serena is unnecessary |
 
 ---
 
@@ -417,7 +489,7 @@ exclude_patterns:
 - [Serena Official Repository](https://github.com/oraios/serena)
 - [Serena Documentation](https://oraios.github.io/serena/)
 - [Subagent Guide](./05-claude-subagent-guide.md)
-- [Command/Skill/Agent Usage Guide](./07-command-skill-agent-guide.md)
+- [Skill/Agent Usage Guide](./07-command-skill-agent-guide.md)
 
 ---
 

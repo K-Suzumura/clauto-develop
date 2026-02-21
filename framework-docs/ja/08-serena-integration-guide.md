@@ -1,6 +1,6 @@
 # Serena MCP 統合ガイド
 
-Serenaは、LSP（Language Server Protocol）を活用してコードのセマンティック理解と編集機能を提供するMCPサーバーです。本フレームワークのサブエージェントと組み合わせることで、より高精度なコード操作が可能になります。
+Serenaは、LSP（Language Server Protocol）を活用してコードのセマンティック理解と編集機能を提供するMCPサーバーです。Claude Code単体でも開発は可能ですが、大規模プロジェクトではSerenaのセマンティック解析が効果を発揮します。
 
 ---
 
@@ -30,7 +30,14 @@ Serenaは、AIコーディングエージェントのためのツールキット
 | **IDE級の機能** | 定義ジャンプ、参照検索、リファクタリングなど |
 | **MCP対応** | Claude Codeとシームレスに連携 |
 
-### 1.2 なぜSerenaが必要か
+### 1.2 Serenaが有効なケース
+
+Claude Code 単体でも Glob/Grep/Read 等の基本ツールで十分な開発が可能です。ただし、以下の条件では Serena のセマンティック解析が大きな価値を発揮します：
+
+- **大規模コードベース**（数百ファイル以上）: Glob/Grep では候補が多すぎて非効率
+- **参照関係・呼び出し階層の追跡が頻繁**: 手動の Grep では追跡漏れが発生しやすい
+- **リネーム等のセマンティックリファクタリング**: テキスト置換では不十分な場合
+- **トークン消費の最適化**: セマンティック検索で必要最小限のコードだけを取得
 
 通常のファイル検索（Glob, Grep）との違い：
 
@@ -62,6 +69,23 @@ Serenaは、AIコーディングエージェントのためのツールキット
 | システム | Rust, Go, C, C++ |
 | JVM | Java, Kotlin, Scala, Groovy |
 | その他 | C#, PHP, Swift, Lua など |
+
+### 1.4 導入判断フローチャート
+
+```
+プロジェクトの規模は？
+  ├─ 小規模（〜50ファイル）→ 不要（Glob/Grepで十分）
+  ├─ 中規模（50〜200ファイル）→ オプション（参照追跡が多ければ有効）
+  └─ 大規模（200ファイル以上）→ 推奨（セマンティック解析の効果大）
+
+ポリグロット（多言語）プロジェクト？
+  ├─ Yes → 推奨（LSP対応言語での構造理解に有効）
+  └─ No → 上記の規模で判断
+
+同一プロジェクトで継続作業？
+  ├─ Yes → 推奨（プロジェクトメモリ・事前インデックスが蓄積）
+  └─ No → 上記の規模で判断
+```
 
 ---
 
@@ -177,6 +201,49 @@ exclude_patterns:
   - "**/.git/**"
 ```
 
+### 3.5 プロジェクトメモリ（`.serena/memories/`）
+
+Serena がプロジェクト固有の知識を蓄積するディレクトリです：
+
+- コードベースの構造、パターン、コンベンションを学習
+- セッションをまたいで知識が持続
+- `.gitignore` に `.serena/memories/` を追加推奨
+
+```yaml
+# .gitignore に追加
+.serena/memories/
+```
+
+### 3.6 事前インデックス（`serena project index`）
+
+初回起動前にインデックスを構築するコマンドです：
+
+```bash
+# プロジェクトのインデックスを事前構築
+serena project index
+```
+
+- 大規模プロジェクトでの初回応答速度を大幅に改善
+- CI/CD パイプラインに組み込むことも可能
+
+### 3.7 言語別の追加要件
+
+| 言語 | 追加要件 |
+|------|---------|
+| Go | `gopls` のインストールが必要 |
+| Rust | `rustup` でツールチェーンが必要 |
+| Vue | Node.js v18+ が必要 |
+
+### 3.8 ヘルスチェック
+
+```bash
+# 言語サーバーの状態を確認
+serena health
+```
+
+- 各言語サーバーの起動状態・バージョンを一覧表示
+- 問題がある場合は修正方法を提示
+
 ---
 
 ## 4. 提供ツール
@@ -217,14 +284,18 @@ exclude_patterns:
 
 ### 5.1 エージェント別Serena活用
 
-| エージェント | Serena使用 | 主な用途 |
+| エージェント | Serena活用 | 主な用途 |
 |-------------|-----------|----------|
-| **code-guide** | ✅ 必要（読み取り専用） | シンボル検索、定義ジャンプでナビゲーション精度向上 |
-| **code-builder** | ✅ 必要（フル機能） | セマンティック編集、影響範囲の特定 |
-| **code-reviewer** | ✅ 必要（読み取り専用） | 参照関係の追跡、診断情報の取得 |
-| **code-debugger** | ✅ 必要（読み取り専用） | コールスタック追跡、原因追跡 |
+| **code-builder** | ⚡ 推奨（大規模で効果大） | セマンティック編集、影響範囲の特定 |
+| **code-reviewer** | ⚡ 推奨（参照追跡で効果大） | 参照関係の追跡、診断情報の取得 |
+| **code-debugger** | ⚡ 推奨（コールスタック追跡で効果大） | コールスタック追跡、原因追跡 |
+| **code-guide** | ⚡ 推奨（ナビゲーション精度向上） | シンボル検索、定義ジャンプ |
+| **backend-designer** | ⚡ 推奨（API構造把握で効果大） | API構造・データモデルの把握 |
+| **frontend-designer** | ⚡ 推奨（コンポーネント構造把握で効果大） | コンポーネント構造の把握 |
+| **tech-leader** | ⚡ 推奨（アーキテクチャ把握で効果大） | アーキテクチャ把握、シンボル解析 |
 | **general-purpose** | ⚠️ オプション | 必要に応じて使用 |
-| **その他** | ❌ 不要 | 基本ツールで十分 |
+| **spec-planner** | ❌ 不要 | 仕様レベルの作業 |
+| **req-analyzer** | ❌ 不要 | 要求レベルの作業 |
 
 ### 5.2 連携フロー
 
@@ -240,20 +311,20 @@ exclude_patterns:
     │ ※ Serena不要（仕様レベルの作業）
     ▼
 [設計] backend-designer / frontend-designer
-    │ ※ Serena不要（設計レベルの作業）
+    │ ※ Serena不要（設計レベルの作業）※ 大規模プロジェクトでは構造把握に有効
     ▼
-[実装] code-builder ← Serenaフル活用
+[実装] code-builder ← Serena推奨
     │   - get_symbols: 既存構造の把握
     │   - find_references: 影響範囲の確認
     │   - apply_edit: セマンティックなリファクタリング
     │   - get_diagnostics: エラー確認
     ▼
-[レビュー] code-reviewer ← Serena読み取り活用
+[レビュー] code-reviewer ← Serena推奨（読み取り）
     │   - get_call_hierarchy: 呼び出し関係の確認
     │   - find_references: 変更の影響範囲確認
     │   - get_diagnostics: 静的解析結果の確認
     ▼
-[デバッグ] code-debugger ← Serena読み取り活用
+[デバッグ] code-debugger ← Serena推奨（読み取り）
         - go_to_definition: 原因追跡
         - get_call_hierarchy: コールスタック分析
         - get_hover_info: 型情報確認
@@ -408,7 +479,8 @@ exclude_patterns:
 | 単純なテキスト検索 | Grepの方が高速 |
 | 設定ファイルの編集 | 基本ツールで十分 |
 | 新規ファイル作成 | Writeツールを使用 |
-| 小規模プロジェクト | オーバーヘッドが大きい |
+| 小規模プロジェクト（〜50ファイル） | Glob/Grepで十分。Serenaのセットアップ・起動オーバーヘッドが大きい |
+| Claude Codeの基本ツールで十分なケース | Glob/Grep/Readで目的を達成できる場合、Serenaは不要 |
 
 ---
 
@@ -417,7 +489,7 @@ exclude_patterns:
 - [Serena 公式リポジトリ](https://github.com/oraios/serena)
 - [Serena ドキュメント](https://oraios.github.io/serena/)
 - [サブエージェントガイド](./05-claude-subagent-guide.md)
-- [Command・Skill・Agent 使い分けガイド](./07-command-skill-agent-guide.md)
+- [Skill・Agent 使い分けガイド](./07-command-skill-agent-guide.md)
 
 ---
 
