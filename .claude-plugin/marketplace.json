@@ -9,14 +9,13 @@
   },
   "metadata": {
     "description": "仕様駆動開発のためのサブエージェント群とスキルを提供します",
-    "version": "1.3.0",
-    "pluginRoot": "./plugins"
+    "version": "1.3.0"
   },
   "plugins": [
     {
       "name": "clauto-develop",
-      "source": "./clauto-develop",
-      "description": "AI駆動開発フレームワーク - 10種類のサブエージェント、22種類のスキル（9リファレンス + 13ワークフロー）を含む統合パッケージ",
+      "source": "./plugins/clauto-develop",
+      "description": "AI駆動開発フレームワーク - 10種類のサブエージェント、21種類のスキル（9リファレンス + 12ワークフロー）を含む統合パッケージ",
       "version": "1.3.0",
       "author": {
         "name": "K-Suzumura"
